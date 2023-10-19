@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".WeekViewActivity">
 
 
 
@@ -27,7 +27,7 @@
             android:text="@string/backward"
             android:textColor="@color/black"
             android:textStyle="bold"
-            android:onClick="previousMonth"
+            android:onClick="previousWeek"
             android:textSize="15sp"/>
 
         <Button
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:backgroundTint="@android:color/white"
-            android:onClick="nextMonth"
+            android:onClick="nextWeek"
             android:text="@string/forward"
             android:textColor="@color/black"
             android:textSize="15sp"
@@ -61,11 +61,12 @@
             android:id="@+id/spinner1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             >
         </Spinner>
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -141,10 +142,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/calendarRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_weight="1"
-
         />
-    
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/new_event"
+        android:layout_gravity="center"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:onClick="newEvent"
+        android:textSize="20sp"/>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+
+    </ListView>
 </LinearLayout>

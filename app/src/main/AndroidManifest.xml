@@ -12,6 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CalanderApp2"
         tools:targetApi="31">
+
+        <activity
+            android:name=".EventEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WeekViewActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

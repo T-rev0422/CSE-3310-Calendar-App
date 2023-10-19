@@ -10,4 +10,14 @@
     <string name="thu">THU</string>
     <string name="fri">FRI</string>
     <string name="sat">SAT</string>
+    <string name="weekly">WEEKLY</string>
+    <string name="_1">1</string>
+    <string name="new_event">New Event</string>
+    <string-array name="views">
+        <item>Month</item>
+        <item>Day</item>
+        <item>Week</item>
+        <item>Year</item>
+    </string-array>
+
 </resources>
