@@ -86,21 +86,33 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         }
     }
 
+    public void monthlyAction(View view) {
+
+        startActivity(new Intent(this,MainActivity.class));
+    }
     public void weeklyAction(View view) {
+
         startActivity(new Intent(this,WeekViewActivity.class));
+    }
+    public void dailyAction(View view)
+    {
+        startActivity(new Intent(this, DailyCalendarActivity.class));
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
         if(i==0){ //monthlyAction
-            return;
+            //monthlyAction(view);
         }
         else if(i==1) { //DailyAction
-            //dailyAction(view);
+
+            dailyAction(view);
         }
         else if(i==2) { //WeeklyAction
+
             weeklyAction(view);
+
         }
         else if(i==3){ //YearlyAction
             return;

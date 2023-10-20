@@ -13,6 +13,12 @@
     <string name="weekly">WEEKLY</string>
     <string name="_1">1</string>
     <string name="new_event">New Event</string>
+    <string name="Weekly">Weekly</string>
+    <string name="event">Event</string>
+    <string name="_10_00">10:00</string>
+    <string name="event_3">Event 3</string>
+    <string name="event_2">Event 2</string>
+    <string name="event_1">Event 1</string>
     <string-array name="views">
         <item>Month</item>
         <item>Day</item>

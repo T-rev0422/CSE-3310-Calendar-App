@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ import java.util.ArrayList;
 public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
+    private ListView eventListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,16 +31,21 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         initWidgets();
         setWeek();
 
-        Spinner spinner = findViewById(R.id.spinner1);
+
+        Spinner spinner = findViewById(R.id.spinner3);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.views, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(spinner.getOnItemSelectedListener());
+
+
     }
     private void initWidgets() {
         //get both views
         monthYearText = findViewById(R.id.monthYearHeader);
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
+        eventListView = findViewById(R.id.eventListView);
+
     }
     private void setWeek() {
         monthYearText.setText(monthYearFromDate(CalendarUtility.selectedDate));
@@ -47,8 +55,14 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
+        setEventAdapater();
     }
 
+    private void setEventAdapater() {
+        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtility.selectedDate);
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        eventListView.setAdapter(eventAdapter);
+    }
 
 
     public void previousWeek(View view) {
@@ -68,27 +82,38 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
     public void newEvent(View view) {
+
+        startActivity(new Intent(this,EventEditActivity.class));
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
         if(i==0){ //monthlyAction
+
             monthlyAction(view);
         }
         else if(i==1) { //DailyAction
-            //dailyAction(view);
+
+            dailyAction(view);
         }
         else if(i==2) { //WeeklyAction
-            setWeek();
+
+            //weeklyAction(view);
+
         }
         else if(i==3){ //YearlyAction
             return;
         }
+
     }
 
     public void monthlyAction(View view) {
+
         startActivity(new Intent(this,MainActivity.class));
+    }
+    public void dailyAction(View view) {
+
+        startActivity(new Intent(this, DailyCalendarActivity.class));
     }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
