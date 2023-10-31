@@ -31,5 +31,7 @@
         <item>Day</item>
         <item>Week</item>
     </string-array>
+    <string name="title_activity_calendar_list">CalendarListActivity</string>
+    <string name="create_new_calendar">Create New Calendar</string>
 
 </resources>
