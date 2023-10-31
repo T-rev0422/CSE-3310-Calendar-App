@@ -20,7 +20,7 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
             android:layout_marginStart="0dp"
             android:backgroundTint="@android:color/white"
@@ -57,13 +57,20 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <Spinner
-            android:id="@+id/spinner3"
-            android:layout_width="0dp"
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_height="match_parent"
+            android:layout_width="0dp"
             android:layout_weight="1"
-            >
-        </Spinner>
+            android:hint="@string/Week_view"
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+            <AutoCompleteTextView
+                android:id="@+id/selectView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

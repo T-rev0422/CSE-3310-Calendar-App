@@ -12,31 +12,48 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, AdapterView.OnItemSelectedListener{
+public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
 
+    AutoCompleteTextView autoCompleteTextView;
+
+    ArrayAdapter<String>adapterItems;
+    String[] views= {"Month","Day"};
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
         initWidgets();
         setWeek();
 
+        autoCompleteTextView = findViewById(R.id.selectView);
+        adapterItems = new ArrayAdapter<String>(this,R.layout.list_item,views);
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0:
+                        monthlyAction(view);
+                        break;
+                    case 1:
+                        dailyAction(view);
+                        break;
 
-        Spinner spinner = findViewById(R.id.spinner3);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.views, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(spinner.getOnItemSelectedListener());
+                }
+            }
+        });
+
 
 
 
@@ -93,27 +110,20 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
         startActivity(new Intent(this,MainActivity.class));
     }
+
+
+    public void weeklyAction(View view) {
+        startActivity(new Intent(this,WeekViewActivity.class));
+    }
+
+
     public void dailyAction(View view) {
 
         startActivity(new Intent(this, DailyCalendarActivity.class));
     }
 
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-        if(i==0){ //monthlyAction
 
-            monthlyAction(view);
-        }
-        else if(i==1) { //DailyAction
 
-            dailyAction(view);
-        }
 
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
-    }
 }

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -7,7 +9,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
 
 
     <LinearLayout
@@ -20,15 +21,15 @@
 
         <Button
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_height="match_parent"
             android:layout_marginStart="0dp"
+            android:layout_weight="0.5"
             android:backgroundTint="@android:color/white"
+            android:onClick="previousMonth"
             android:text="@string/backward"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:onClick="previousMonth"
-            android:textSize="15sp"/>
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
         <Button
             android:layout_width="0dp"
@@ -57,13 +58,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <Spinner
-            android:id="@+id/spinner1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
 
-        </Spinner>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_height="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:hint="@string/Month_view"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/selectView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="none" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
 
@@ -151,3 +160,4 @@
 
 
 </LinearLayout>
+

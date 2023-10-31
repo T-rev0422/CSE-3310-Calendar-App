@@ -12,7 +12,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 
@@ -20,11 +20,14 @@ import android.widget.TextView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener {
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
 
+    AutoCompleteTextView autoCompleteTextView;
 
+    ArrayAdapter<String>adapterItems;
+    String[] views= {"Day","Week"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +39,24 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         setMonth();
 
         //UC 2: Dropdown menu button to change views
-        Spinner spinner = findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,R.array.views, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(this);
+        autoCompleteTextView = findViewById(R.id.selectView);
+        adapterItems = new ArrayAdapter<String>(this,R.layout.list_item,views);
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0:
+                        dailyAction(view);
+                        break;
+                    case 1:
+                        weeklyAction(view);
+                        break;
 
+
+                }
+            }
+        });
 
 
     }
@@ -75,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
 
 
-    @Override
+
     public void onItemClick(int position, LocalDate date) {
         if(date != null) {
             CalendarUtility.selectedDate = date;
@@ -84,32 +99,26 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     }
 
 
+    public void monthlyAction(View view) {
+
+        startActivity(new Intent(this,MainActivity.class));
+    }
+
+
+
     public void weeklyAction(View view) {
 
         startActivity(new Intent(this,WeekViewActivity.class));
     }
+
     public void dailyAction(View view)
     {
         startActivity(new Intent(this, DailyCalendarActivity.class));
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
-       if(i==1) { //DailyAction
-
-            dailyAction(view);
-        }
-        else if(i==2) { //WeeklyAction
-
-            weeklyAction(view);
-
-        }
-
-    }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) {
-
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
     }
 }
