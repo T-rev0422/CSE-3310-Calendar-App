@@ -99,6 +99,10 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         startActivity(new Intent(this, DailyCalendarActivity.class));
     }
 
+    public void openCalendarListActivity() {
+        startActivity(new Intent(this, CalendarListActivity.class));
+    }
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 

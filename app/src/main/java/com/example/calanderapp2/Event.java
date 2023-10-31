@@ -38,12 +38,14 @@ public class Event {
     private String eventName;
     private LocalDate date;
     private LocalTime time;
+    private String calendarId;
 
-    public Event(String eventName, LocalDate date, LocalTime time)
+    public Event(String eventName, LocalDate date, LocalTime time, String calendarId)
     {
         this.eventName = eventName;
         this.date = date;
         this.time = time;
+        this.calendarId = calendarId;
     }
 
     private LocalDate getDate() {
@@ -56,5 +58,9 @@ public class Event {
 
     public String getEventName() {
         return eventName;
+    }
+
+    public String calendarId() {
+        return calendarId;
     }
 }
