@@ -64,6 +64,15 @@
             android:layout_weight="1">
         </Spinner>
 
+        <!--
+        <Button
+            android:id="@+id/contactButton"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"
+            android:onClick="newEvent"
+            android:text="@string/dot"/>
+        -->
     </LinearLayout>
 
     <TextView
@@ -86,6 +95,8 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+
 
     <ListView
         android:id="@+id/hourListView"

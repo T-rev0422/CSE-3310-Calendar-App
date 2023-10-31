@@ -19,11 +19,17 @@
     <string name="event_3">Event 3</string>
     <string name="event_2">Event 2</string>
     <string name="event_1">Event 1</string>
+    <string name="JANUARY">JANUARY</string>
+    <string name="choose_contact">Choose Contact</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="add_contacts">add contacts</string>
+    <string name="dot">.</string>
+    <string name="contact_email">Email Address</string>
     <string-array name="views">
         <item>Month</item>
         <item>Day</item>
         <item>Week</item>
-        <item>Year</item>
     </string-array>
 
 </resources>

@@ -12,15 +12,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
+
 
 
 import java.time.LocalDate;
-import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, AdapterView.OnItemSelectedListener {
@@ -86,10 +83,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         }
     }
 
-    public void monthlyAction(View view) {
 
-        startActivity(new Intent(this,MainActivity.class));
-    }
     public void weeklyAction(View view) {
 
         startActivity(new Intent(this,WeekViewActivity.class));
@@ -99,13 +93,11 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         startActivity(new Intent(this, DailyCalendarActivity.class));
     }
 
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-        if(i==0){ //monthlyAction
-            //monthlyAction(view);
-        }
-        else if(i==1) { //DailyAction
+       if(i==1) { //DailyAction
 
             dailyAction(view);
         }
@@ -114,9 +106,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
             weeklyAction(view);
 
         }
-        else if(i==3){ //YearlyAction
-            return;
-        }
+
     }
 
     @Override

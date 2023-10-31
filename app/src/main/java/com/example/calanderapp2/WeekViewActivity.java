@@ -19,7 +19,7 @@ import android.widget.TextView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
+public class WeekViewActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, AdapterView.OnItemSelectedListener{
     private TextView monthYearText;
     private RecyclerView calendarRecyclerView;
     private ListView eventListView;
@@ -39,6 +39,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         spinner.setOnItemSelectedListener(spinner.getOnItemSelectedListener());
 
 
+
     }
     private void initWidgets() {
         //get both views
@@ -55,10 +56,10 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),7);
         calendarRecyclerView.setLayoutManager(layoutManager);
         calendarRecyclerView.setAdapter(calendarAdapter);
-        setEventAdapater();
+        setEventAdapter();
     }
 
-    private void setEventAdapater() {
+    private void setEventAdapter() {
         ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtility.selectedDate);
         EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
         eventListView.setAdapter(eventAdapter);
@@ -86,6 +87,18 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         startActivity(new Intent(this,EventEditActivity.class));
     }
 
+
+
+    public void monthlyAction(View view) {
+
+        startActivity(new Intent(this,MainActivity.class));
+    }
+    public void dailyAction(View view) {
+
+        startActivity(new Intent(this, DailyCalendarActivity.class));
+    }
+
+
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         if(i==0){ //monthlyAction
@@ -96,29 +109,11 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
             dailyAction(view);
         }
-        else if(i==2) { //WeeklyAction
-
-            //weeklyAction(view);
-
-        }
-        else if(i==3){ //YearlyAction
-            return;
-        }
 
     }
 
-    public void monthlyAction(View view) {
-
-        startActivity(new Intent(this,MainActivity.class));
-    }
-    public void dailyAction(View view) {
-
-        startActivity(new Intent(this, DailyCalendarActivity.class));
-    }
     @Override
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
-
 }

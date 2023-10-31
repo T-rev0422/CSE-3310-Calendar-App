@@ -4,10 +4,12 @@ import static com.example.calanderapp2.CalendarUtility.selectedDate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,14 +20,15 @@ import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.Locale;
 
-public class DailyCalendarActivity extends AppCompatActivity {
+public class DailyCalendarActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener, AdapterView.OnItemSelectedListener{
     private TextView monthDayText;
     private TextView dayOfWeek;
     private ListView hourListView;
+    //private Button contactButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_daily_calender);
+        setContentView(R.layout.activity_daily_calendar);
         initWidgets();
 
         Spinner spinner = findViewById(R.id.spinner2);
@@ -33,8 +36,26 @@ public class DailyCalendarActivity extends AppCompatActivity {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(spinner.getOnItemSelectedListener());
+
+        /*contacts app button - to be implemented later
+        contactButton = (Button) findViewById(R.id.contactButton);
+        contactButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openContactsActivity();
+            }
+        });
+        */
+
     }
 
+    /*for contacts app button - to be implemented later
+    public void openContactsActivity() {
+        Intent intent = new Intent(this, AddContactFromContactsAppActivity.class);
+        startActivity(intent);
+
+    }
+    */
 
 
     public void onItemClick(int position, LocalDate date) {
@@ -90,5 +111,34 @@ public class DailyCalendarActivity extends AppCompatActivity {
 
     public void newEvent(View view) {
         //startactivity
+    }
+
+    public void monthlyAction(View view) {
+
+        startActivity(new Intent(this,MainActivity.class));
+    }
+    public void weeklyAction(View view) {
+
+        startActivity(new Intent(this,WeekViewActivity.class));
+    }
+
+
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
+        if(i==0) { //MonthlyAction
+
+            monthlyAction(view);
+        }
+        else if(i==2) { //WeeklyAction
+
+            weeklyAction(view);
+
+        }
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

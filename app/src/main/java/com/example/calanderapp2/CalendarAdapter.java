@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +23,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     @Override
     public CalendarViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.calender_cell,parent,false);
+        View view = inflater.inflate(R.layout.calendar_cell,parent,false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         if(days.size() > 15) { //monthView
             layoutParams.height = (int)(parent.getHeight()*0.16666666);
@@ -56,9 +55,5 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     public interface OnItemListener{
         void onItemClick(int position, LocalDate date);
-
-        void onItemSelected(AdapterView<?> adapterView, View view, int i, long l);
-
-        void onNothingSelected(AdapterView<?> adapterView);
     }
 }
