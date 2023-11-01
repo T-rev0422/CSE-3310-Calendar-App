@@ -26,8 +26,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     AutoCompleteTextView autoCompleteTextView;
 
+
     ArrayAdapter<String>adapterItems;
     String[] views= {"Month","Day"};
+    AutoCompleteTextView autoCompleteTextViewMenu;
+    ArrayAdapter<String>adapterItemsMenu;
+
+    String[] menuOptions= {"View Calendars","Saved Contacts"};
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +59,31 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
             }
         });
 
+        autoCompleteTextViewMenu = findViewById(R.id.Menu);
+        adapterItemsMenu = new ArrayAdapter<String>(this,R.layout.list_item,menuOptions);
+        autoCompleteTextViewMenu.setAdapter(adapterItemsMenu);
+        autoCompleteTextViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0:
+                        //view calendars UC 5;
+                        viewCalendars(view);
+
+                        break;
+                    case 1:
+                        //saved contacts page UC 6;
+                        break;
 
 
+                }
+            }
+        });
+
+    }
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
 
     }
     private void initWidgets() {

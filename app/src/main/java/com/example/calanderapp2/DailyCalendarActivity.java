@@ -27,6 +27,10 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
 
     ArrayAdapter<String>adapterItems;
     String[] views= {"Month","Week"};
+    AutoCompleteTextView autoCompleteTextViewMenu;
+    ArrayAdapter<String>adapterItemsMenu;
+
+    String[] menuOptions= {"View Calendars","Saved Contacts"};
 
     //private Button contactButton;
     @Override
@@ -54,6 +58,26 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
             }
         });
 
+        autoCompleteTextViewMenu = findViewById(R.id.Menu);
+        adapterItemsMenu = new ArrayAdapter<String>(this,R.layout.list_item,menuOptions);
+        autoCompleteTextViewMenu.setAdapter(adapterItemsMenu);
+        autoCompleteTextViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0:
+                        //view calendars UC 5;
+                        viewCalendars(view);
+
+                        break;
+                    case 1:
+                        //saved contacts page UC 6;
+                        break;
+
+
+                }
+            }
+        });
 
         /*contacts app button - to be implemented later
         contactButton = (Button) findViewById(R.id.contactButton);
@@ -75,7 +99,11 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
     }
     */
 
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
 
+    }
 
     public void onItemClick(int position, LocalDate date) {
         CalendarUtility.selectedDate = date;

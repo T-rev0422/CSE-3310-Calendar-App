@@ -36,5 +36,11 @@
     <string name="Month_view">Month</string>
     <string name="Week_view">Week</string>
     <string name="Day_view">Day</string>
+    <string name="saved_contacts">Saved Contacts</string>
+    <string name="view_calendars">View Calendars</string>
+    <string name="search_event">Search event</string>
+    <string name="calender_app">CALENDER APP</string>
+    <string name="view">view</string>
+    <string name="menu">menu</string> />
 
 </resources>

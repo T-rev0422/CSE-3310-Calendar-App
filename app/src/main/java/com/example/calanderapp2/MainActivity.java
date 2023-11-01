@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -25,14 +26,21 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private RecyclerView calendarRecyclerView;
 
     AutoCompleteTextView autoCompleteTextView;
-
+    AutoCompleteTextView autoCompleteTextViewMenu;
+    ArrayAdapter<String>adapterItemsMenu;
     ArrayAdapter<String>adapterItems;
     String[] views= {"Day","Week"};
+    String[] menuOptions= {"View Calendars","Saved Contacts"};
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //UC 1: Calendar layout
         initWidgets();
         CalendarUtility.selectedDate = LocalDate.now();
@@ -58,6 +66,35 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
             }
         });
 
+        autoCompleteTextViewMenu = findViewById(R.id.Menu);
+        adapterItemsMenu = new ArrayAdapter<String>(this,R.layout.list_item,menuOptions);
+        autoCompleteTextViewMenu.setAdapter(adapterItemsMenu);
+        autoCompleteTextViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                switch(i) {
+                    case 0:
+                        //view calendars UC 5;
+                        viewCalendars(view);
+
+                        break;
+                    case 1:
+                        //saved contacts page UC 6;
+                        break;
+
+
+                }
+            }
+        });
+
+
+
+
+    }
+
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
 
     }
 
