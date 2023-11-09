@@ -18,6 +18,9 @@
             android:name=".Menu"
             android:exported="false" />
         <activity
+            android:name=".CalendarListActivity"
+            android:exported="false" />
+        <activity
             android:name=".DailyCalendarActivity"
             android:exported="false" />
         <activity
