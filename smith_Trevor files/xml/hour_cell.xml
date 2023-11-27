@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="70dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:text="@string/_10_00"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:background="@color/gray">
+
+        <TextView
+            android:id="@+id/event1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:lines="2"
+            android:text="@string/event_1"/>
+
+        <TextView
+            android:id="@+id/event2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:lines="2"
+            android:text="@string/event_2"/>
+
+        <TextView
+            android:id="@+id/event3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:lines="2"
+            android:text="@string/event_3"/>
+
+    </LinearLayout>
+
+</LinearLayout>
