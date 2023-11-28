@@ -20,15 +20,13 @@ public class Event {
         return events;
     }
 
-    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time)
+    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, String eventTime)
     {
         ArrayList<Event> events = new ArrayList<>();
 
         for(Event event : eventList)
         {
-            int eventHour = event.time.getHour();
-            int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour)
+            if(event.getDate().equals(date) && event.getEventTime().equals(eventTime))
                 events.add(event);
         }
 
@@ -37,22 +35,22 @@ public class Event {
 
     private String eventName;
     private LocalDate date;
-    private LocalTime time;
+    private String eventTime;
     private String calendarId;
 
-    public Event(String eventName, LocalDate date, LocalTime time)
+    public Event(String eventName, LocalDate date, String eventTime)
     {
         this.eventName = eventName;
         this.date = date;
-        this.time = time;
+        this.eventTime = eventTime;
     }
 
     private LocalDate getDate() {
         return date;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public String getEventTime() {
+        return eventTime;
     }
 
     public String getEventName() {

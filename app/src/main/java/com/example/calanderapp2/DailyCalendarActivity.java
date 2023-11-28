@@ -10,8 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+
 import android.widget.ListView;
 import android.widget.TextView;
+
+
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -32,7 +35,7 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
 
     String[] menuOptions= {"View Calendars","Saved Contacts"};
 
-    //private Button contactButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,11 +70,13 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-                        viewCalendars(view);
+
 
                         break;
                     case 1:
                         //saved contacts page UC 6;
+
+                        openContactsActivity();
 
                         break;
 
@@ -80,31 +85,17 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
             }
         });
 
-        /*contacts app button - to be implemented later
-        contactButton = (Button) findViewById(R.id.contactButton);
-        contactButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openContactsActivity();
-            }
-        });
-        */
-
     }
 
-    /*for contacts app button - to be implemented later
+
+
     public void openContactsActivity() {
-        Intent intent = new Intent(this, AddContactFromContactsAppActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
+
 
     }
-    */
 
-    public void viewCalendars(View viw) {
-        Intent intent = new Intent(this, CalendarListActivity.class);
-        startActivity(intent);
 
-    }
 
     public void onItemClick(int position, LocalDate date) {
         CalendarUtility.selectedDate = date;
@@ -139,6 +130,7 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
         String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
         ArrayList<HourEvent> hourList = new ArrayList<>();
 
+
         for (int hour = 0; hour < 24; hour++) {
             LocalTime time = LocalTime.of(hour, 0);
             ArrayList<Event> events = Event.eventsForDateAndTimeAndCalendarId(selectedDate, time, currentCalendarId);
@@ -161,7 +153,8 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
     }
 
     public void newEvent(View view) {
-        //startactivity
+
+       startActivity(new Intent(this,EventEditActivity.class));
     }
 
 

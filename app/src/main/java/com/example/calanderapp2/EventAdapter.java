@@ -1,3 +1,25 @@
+
+/*package com.example.calanderapp2;
+
+import android.content.Context;
+
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.List;
+
+public class EventAdapter extends ArrayAdapter<Event> {
+    public EventAdapter(@NonNull Context context, List<Event>events) {
+
+        super(context,0, events);
+    }
+
+
+}
+*/
 package com.example.calanderapp2;
 
 import android.content.Context;
@@ -29,7 +51,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
         TextView eventCell = convertView.findViewById(R.id.eventCell);
 
-        String eventTitle = event.getEventName() +" "+ CalendarUtility.formattedTime(event.getTime());
+        String eventTitle = event.getEventName() +" "+ event.getEventTime();
         eventCell.setText(eventTitle);
         return convertView;
     }

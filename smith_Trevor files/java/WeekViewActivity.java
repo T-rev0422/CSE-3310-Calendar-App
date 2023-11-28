@@ -90,7 +90,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         //get both views
         monthYearText = findViewById(R.id.monthYearHeader);
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        eventListView = findViewById(R.id.eventListView);
+        eventListView =     findViewById(R.id.eventListView);
 
     }
     private void setWeek() {
@@ -155,9 +155,4 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
         startActivity(new Intent(this, DailyCalendarActivity.class));
     }
-
-
-
-
-
 }

@@ -34,7 +34,6 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     String[] menuOptions= {"View Calendars","Saved Contacts"};
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
@@ -73,11 +72,12 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-                        viewCalendars(view);
+                        //viewCalendars(view);
 
                         break;
                     case 1:
                         //saved contacts page UC 6;
+                        openContactsActivity();
                         break;
 
 
@@ -86,9 +86,9 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         });
 
     }
-    public void viewCalendars(View viw) {
-        Intent intent = new Intent(this, CalendarListActivity.class);
-        startActivity(intent);
+    public void openContactsActivity() {
+        startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
+
 
     }
     private void initWidgets() {
@@ -143,7 +143,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     public void newEvent(View view) {
 
-        startActivity(new Intent(this,EventEditActivity.class));
+       // startActivity(new Intent(this,EventEditActivity.class));
     }
 
 

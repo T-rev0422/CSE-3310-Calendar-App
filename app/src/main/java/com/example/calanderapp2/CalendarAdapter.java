@@ -61,5 +61,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         void weeklyAction(View view);
 
         void dailyAction(View view);
+
+
     }
 }

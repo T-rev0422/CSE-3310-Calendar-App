@@ -66,6 +66,7 @@
         android:inputType="text"
         android:hint="Enter event time"/>
 
+
     <Button
         android:id="@+id/contact_pick"
         android:layout_width="wrap_content"

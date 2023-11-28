@@ -42,6 +42,11 @@
     <string name="calender_app">CALENDER APP</string>
     <string name="view">view</string>
     <string name="menu">menu</string>
+    <string name="name">Event Name:</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="save">Save</string>
+    <string name="return_to_monthly_view">Return to Monthly View</string>
     <string name="send_invite">Send invite</string>
     <string name="_name">Name</string>
     />

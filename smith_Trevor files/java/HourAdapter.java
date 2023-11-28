@@ -28,7 +28,7 @@ public class HourAdapter extends ArrayAdapter<HourEvent> {
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.hour_cell, parent, false);
 
-        setHour(convertView,hourEvent.time);
+        setHour(convertView,hourEvent.eventTime);
         setEvents(convertView,hourEvent.events);
         return convertView;
     }
@@ -80,9 +80,11 @@ public class HourAdapter extends ArrayAdapter<HourEvent> {
         view.setVisibility(View.INVISIBLE);
     }
 
-    private void setHour(View convertView, LocalTime time) {
+    private void setHour(View convertView, String eventTime) {
         TextView timeView = convertView.findViewById(R.id.time);
-        timeView.setText(CalendarUtility.formattedShortTime(time));
+        LocalTime time = LocalTime.parse(eventTime);
+        String formattedTime = CalendarUtility.formattedShortTime(time);
+        timeView.setText(formattedTime);
 
     }
 }

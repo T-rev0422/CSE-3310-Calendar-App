@@ -172,16 +172,7 @@
             android:layout_weight="1"
             />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_event"
-            android:layout_gravity="center"
-            android:backgroundTint="@android:color/white"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:onClick="newEvent"
-            android:textSize="20sp"/>
+
 
         <ListView
             android:id="@+id/eventListView"
