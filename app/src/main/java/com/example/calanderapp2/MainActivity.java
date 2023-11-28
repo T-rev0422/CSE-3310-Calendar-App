@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-
+                        viewCalendars(view);
 
                         break;
                     case 1:
@@ -86,6 +86,12 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 }
             }
         });
+
+    }
+
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
 
     }
 

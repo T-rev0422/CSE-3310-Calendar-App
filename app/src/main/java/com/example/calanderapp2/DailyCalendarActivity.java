@@ -70,7 +70,7 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-
+                        viewCalendars(view);
 
                         break;
                     case 1:
@@ -87,7 +87,11 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
 
     }
 
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
 
+    }
 
     public void openContactsActivity() {
         startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
