@@ -72,6 +72,7 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
                         break;
                     case 1:
                         //saved contacts page UC 6;
+
                         break;
 
 

@@ -41,6 +41,9 @@
     <string name="search_event">Search event</string>
     <string name="calender_app">CALENDER APP</string>
     <string name="view">view</string>
-    <string name="menu">menu</string> />
+    <string name="menu">menu</string>
+    <string name="send_invite">Send invite</string>
+    <string name="_name">Name</string>
+    />
 
 </resources>

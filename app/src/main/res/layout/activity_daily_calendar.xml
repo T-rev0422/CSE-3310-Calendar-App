@@ -83,16 +83,9 @@
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <!--
-        <Button
-            android:id="@+id/contactButton"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:onClick="newEvent"
-            android:text="@string/dot"/>
-        </Button>
-        -->
+
+
+
     </LinearLayout>
 
 

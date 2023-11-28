@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Name"
+        android:text="@string/_name"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
@@ -67,13 +67,46 @@
         android:hint="Enter event time"/>
 
     <Button
+        android:id="@+id/contact_pick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/choose_contact" />
+
+    <TextView
+        android:id="@+id/contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/contact_name" />
+
+    <TextView
+        android:id="@+id/contact_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/phone_number" />
+
+    <Button
+        android:id="@+id/sendInvite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:text="@string/send_invite"
+        android:textColor="@color/white"
+        android:onClick="saveEventAction"
+        android:textSize="20sp"/>
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:background="@null"
         android:text="Save"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textStyle="bold"
         android:onClick="saveEventAction"
         android:textSize="20sp"/>
