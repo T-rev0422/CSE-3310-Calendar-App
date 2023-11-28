@@ -10,9 +10,10 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+
 import android.widget.ListView;
 import android.widget.TextView;
+
 
 
 import java.time.LocalDate;
@@ -75,6 +76,7 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
                     case 1:
                         //saved contacts page UC 6;
                         openContactsActivity();
+
                         break;
 
 
@@ -82,8 +84,8 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
             }
         });
 
-
     }
+
 
 
     public void openContactsActivity() {
@@ -127,7 +129,8 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
         ArrayList<HourEvent> hourList = new ArrayList<>();
         for(int hour=0;hour<24;hour++){
             LocalTime time = LocalTime.of(hour,0);
-            ArrayList<Event> events = Event.eventsForDateAndTime(selectedDate,time);
+            String eventTime = String.format("%02d:00", hour);
+            ArrayList<Event> events = Event.eventsForDateAndTime(selectedDate,eventTime);
             HourEvent hourEvent = new HourEvent(time,events);
             hourList.add(hourEvent);
         }
@@ -147,7 +150,7 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
 
     public void newEvent(View view) {
 
-       // startActivity(new Intent(this,EventEditActivity.class));
+       startActivity(new Intent(this,EventEditActivity.class));
     }
 
 

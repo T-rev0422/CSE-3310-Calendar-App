@@ -31,8 +31,9 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
 
     private TextView PhoneNumber;
 
+    public static String phone;
 
-    private HashMap<String, String> contactList = new HashMap<>();
+    public HashMap<String, String> contactList = new HashMap<>();
     private Button backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +146,8 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
                         @SuppressLint("Range") String number = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         ContactName.setText(contactName);
                         PhoneNumber.setText(number);
+                        contactList.put(contactName,number);
+                        phone = number;
 
                     }
                     cursor2.close();
