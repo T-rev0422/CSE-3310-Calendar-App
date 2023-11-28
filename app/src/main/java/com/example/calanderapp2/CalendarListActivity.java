@@ -25,24 +25,34 @@ public class CalendarListActivity extends AppCompatActivity {
 
         calendarSpinner = findViewById(R.id.calendarSpinner);
 
-        // Initialize the list of created calendars and spinner
+        //Initialize the list of created calendars and spinner
         calendarList = retrieveCalendars();
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getCalendarNames());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         calendarSpinner.setAdapter(spinnerAdapter);
+        //Setup a way to go back to a previous screen
+        Button backButton = findViewById(R.id.backButton);
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Go back to previous screen
+                onBackPressed();
+            }
+        });
     }
 
-    // Handle the "Create New Calendar" button click
+
+    //Handle the "Create New Calendar" button click
     public void createNewCalendar(View view) {
-        // Create an AlertDialog to input the new calendar name
+        //Create an AlertDialog to input the new calendar name
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Create New Calendar");
 
-        // Set up the input
+        //Set up the input
         final EditText input = new EditText(this);
         builder.setView(input);
 
-        // Set up the buttons
+        //Set up the buttons
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -65,11 +75,13 @@ public class CalendarListActivity extends AppCompatActivity {
         builder.show();
     }
 
+
+    public void previousView() {
+        super.onBackPressed();
+    }
+
     // Replace this with your actual data retrieval method
     private List<CalendarModel> retrieveCalendars() {
-        // Implement logic to retrieve the list of created calendars
-        // Return a List<CalendarModel> with your calendar data
-        // For now, return an empty list
         return new ArrayList<>();
     }
 
