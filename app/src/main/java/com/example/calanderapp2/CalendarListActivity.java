@@ -2,6 +2,7 @@ package com.example.calanderapp2;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,14 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
+import android.content.Intent;
+
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CalendarListActivity extends AppCompatActivity {
 
     private Spinner calendarSpinner;
-    private List<CalendarModel> calendarList;
     private ArrayAdapter<String> spinnerAdapter;
+    private Set<String> calendarSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,21 +31,44 @@ public class CalendarListActivity extends AppCompatActivity {
         calendarSpinner = findViewById(R.id.calendarSpinner);
 
         //Initialize the list of created calendars and spinner
-        calendarList = retrieveCalendars();
-        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, getCalendarNames());
+        calendarSet = retrieveCalendars();
+        //Check if "My Calendar" is in the set, and add it if not
+        if (!calendarSet.contains("My Calendar")) {
+            calendarSet.add("My Calendar");
+            saveCalendars(calendarSet);
+        }
+
+        spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, new ArrayList<>(calendarSet));
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         calendarSpinner.setAdapter(spinnerAdapter);
+
         //Setup a way to go back to a previous screen
         Button backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Go back to previous screen
+                //Go back to the previous screen
                 onBackPressed();
             }
         });
-    }
 
+        // Setup the OK button under the spinner
+        Button okButton = findViewById(R.id.okayButton);
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Get the selected calendarId from the spinner
+                String selectedCalendarId = (String) calendarSpinner.getSelectedItem();
+
+                //Pass the selected calendarId to CalendarModel
+                CalendarModel.getInstance().setCurrentCalendarId(selectedCalendarId);
+
+                //Start the MainActivity (Month view)
+                Intent intent = new Intent(CalendarListActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
 
     //Handle the "Create New Calendar" button click
     public void createNewCalendar(View view) {
@@ -58,9 +86,13 @@ public class CalendarListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String name = input.getText().toString().trim();
                 if (!name.isEmpty()) {
-                    // Add the new calendar name to the spinner
+                    //Add the new calendar name to the spinner
                     spinnerAdapter.add(name);
                     spinnerAdapter.notifyDataSetChanged();
+
+                    //Add the calendar name to SharedPreferences
+                    calendarSet.add(name);
+                    saveCalendars(calendarSet);
                 }
             }
         });
@@ -75,21 +107,17 @@ public class CalendarListActivity extends AppCompatActivity {
         builder.show();
     }
 
-
-    public void previousView() {
-        super.onBackPressed();
+    //Retrieve calendar names from SharedPreferences
+    private Set<String> retrieveCalendars() {
+        SharedPreferences preferences = getSharedPreferences("Calendars", MODE_PRIVATE);
+        return preferences.getStringSet("calendarSet", new HashSet<>());
     }
 
-    // Replace this with your actual data retrieval method
-    private List<CalendarModel> retrieveCalendars() {
-        return new ArrayList<>();
-    }
-
-    private List<String> getCalendarNames() {
-        List<String> names = new ArrayList<>();
-        for (CalendarModel calendar : calendarList) {
-            names.add(calendar.getCalendarName());
-        }
-        return names;
+    //Save calendar names to SharedPreferences
+    private void saveCalendars(Set<String> calendars) {
+        SharedPreferences preferences = getSharedPreferences("Calendars", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putStringSet("calendarSet", calendars);
+        editor.apply();
     }
 }

@@ -7,29 +7,41 @@ import java.util.ArrayList;
 public class Event {
     public static ArrayList<Event> eventList = new ArrayList<>();
 
-    public static ArrayList<Event> eventsForDate(LocalDate date)
-    {
+    public static ArrayList<Event> eventsForDateAndCalendarId(LocalDate date, String calendarId) {
         ArrayList<Event> events = new ArrayList<>();
 
-        for(Event event : eventList)
-        {
-            if(event.getDate().equals(date))
+        for (Event event : eventList) {
+            if (event.getDate().equals(date) && event.getCalendarId().equals(calendarId)) {
                 events.add(event);
+            }
         }
 
         return events;
     }
 
-    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time)
-    {
+
+    public static ArrayList<Event> eventsForDateAndTimeAndCalendarId(LocalDate date, LocalTime time, String calendarId) {
         ArrayList<Event> events = new ArrayList<>();
 
-        for(Event event : eventList)
-        {
+        for (Event event : eventList) {
             int eventHour = event.time.getHour();
             int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour)
+            if (event.getDate().equals(date) && eventHour == cellHour && event.getCalendarId().equals(calendarId)) {
                 events.add(event);
+            }
+        }
+
+        return events;
+    }
+
+
+    public static ArrayList<Event> eventsForCalendarId(String calendarId) {
+        ArrayList<Event> events = new ArrayList<>();
+
+        for (Event event : eventList) {
+            if (event.calendarId.equals(calendarId)) {
+                events.add(event);
+            }
         }
 
         return events;
@@ -60,7 +72,7 @@ public class Event {
         return eventName;
     }
 
-    public String calendarId() {
+    public String getCalendarId() {
         return calendarId;
     }
 }

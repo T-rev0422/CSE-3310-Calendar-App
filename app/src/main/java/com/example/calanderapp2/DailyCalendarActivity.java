@@ -135,16 +135,19 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
     }
 
     private ArrayList<HourEvent> hourEventList() {
+        String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
         ArrayList<HourEvent> hourList = new ArrayList<>();
-        for(int hour=0;hour<24;hour++){
-            LocalTime time = LocalTime.of(hour,0);
-            ArrayList<Event> events = Event.eventsForDateAndTime(selectedDate,time);
-            HourEvent hourEvent = new HourEvent(time,events);
+
+        for (int hour = 0; hour < 24; hour++) {
+            LocalTime time = LocalTime.of(hour, 0);
+            ArrayList<Event> events = Event.eventsForDateAndTimeAndCalendarId(selectedDate, time, currentCalendarId);
+            HourEvent hourEvent = new HourEvent(time, events);
             hourList.add(hourEvent);
         }
-        return hourList;
 
+        return hourList;
     }
+
 
     public void previousDay(View view) {
         CalendarUtility.selectedDate = CalendarUtility.selectedDate.minusDays(1);

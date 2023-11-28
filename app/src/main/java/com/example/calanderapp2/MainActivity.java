@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 
         //UC 1: Calendar layout
         initWidgets();
+        CalendarModel calendarModel = CalendarModel.getInstance();
         CalendarUtility.selectedDate = LocalDate.now();
         setMonth();
 
