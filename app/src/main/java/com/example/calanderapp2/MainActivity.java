@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
+
 import android.widget.TextView;
 
 
@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                     case 1:
                         weeklyAction(view);
                         break;
-
-
                 }
             }
         });
@@ -75,26 +73,23 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-                        viewCalendars(view);
+
 
                         break;
                     case 1:
                         //saved contacts page UC 6;
+                        openContactsActivity();
+
                         break;
-
-
                 }
             }
         });
 
-
-
-
     }
 
-    public void viewCalendars(View viw) {
-        Intent intent = new Intent(this, CalendarListActivity.class);
-        startActivity(intent);
+    public void openContactsActivity() {
+        startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
+
 
     }
 

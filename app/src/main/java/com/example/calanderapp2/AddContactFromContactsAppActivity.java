@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -19,37 +20,49 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.HashMap;
 
-public class AddContactFromContactsAppActivity extends AppCompatActivity implements View.OnClickListener{
+
+public class AddContactFromContactsAppActivity extends AppCompatActivity {
     private static final int REQUEST_CONTACT = 1;
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
     private Button ContactPick;
     private TextView ContactName;
 
     private TextView PhoneNumber;
-    private TextView EmailAddress;
 
+
+    private HashMap<String, String> contactList = new HashMap<>();
+    private Button backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_from_contacts_app);
 
 
-        //Intent intent = new Intent(this, AddContactFromContactsAppActivity.class);
         // Intent to pick contacts
         final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
 
         ContactPick = findViewById(R.id.contact_pick);
         ContactName = findViewById(R.id.contact_name);
         PhoneNumber = findViewById(R.id.contact_number);
-        EmailAddress = findViewById(R.id.contact_email);
+
+        backButton = findViewById(R.id.backButton);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                monthlyAction(v);
+            }
+        });
         ActivityResultLauncher<Intent> pickContactLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
 
-                        // Handle the result of picking a contact here
-                        Intent data = result.getData();
-                        onActivityResult(REQUEST_CONTACT,result.getResultCode() ,data);
+                    // Handle the result of picking a contact here
+                    Intent data = result.getData();
+                    onActivityResult(REQUEST_CONTACT,result.getResultCode() ,data);
 
 
                 }
@@ -58,17 +71,21 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity impleme
         ContactPick.setOnClickListener(view -> {
             pickContactLauncher.launch(pickContact);
         });
-        
+
 
         requestContactsPermission();
         updateButton(hasContactsPermission());
 
     }
+
+    public void monthlyAction(View view) {
+
+        startActivity(new Intent(this,MainActivity.class));
+    }
     public void updateButton(boolean enable)
     {
         ContactPick.setEnabled(enable);
 
-        //ContactName.setEnabled(enable);
     }
     private boolean hasContactsPermission()
     {
@@ -100,51 +117,44 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity impleme
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode != Activity.RESULT_OK) return;
 
-        if (requestCode == REQUEST_CONTACT && data != null)
-        {
+        if (requestCode == REQUEST_CONTACT && data != null) {
+            Cursor cursor;
+
+            Uri uri = data.getData();
+            cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor.moveToFirst()) {
 
 
+                @SuppressLint("Range") String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                @SuppressLint("Range") String idRes = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                int intIdRes = Integer.parseInt(idRes);
 
-            String[] queryFields = new String[]{ContactsContract.Contacts._ID, ContactsContract.Data.DISPLAY_NAME,  ContactsContract.CommonDataKinds.Phone.NUMBER,ContactsContract.CommonDataKinds.Email.DATA };
-            Cursor cursor = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, queryFields, ContactsContract.Contacts._ID, null,
-                    null);
+                if (intIdRes == 1) {
+                    Cursor cursor2 = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                            null,
+                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
+                            null,
+                            null);
 
-            //ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC"
-            try
-            {
+                    while (cursor2.moveToNext()) {
+                        @SuppressLint("Range") String number = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        ContactName.setText(contactName);
+                        PhoneNumber.setText(number);
 
-                if (cursor.getCount() == 0) return;
-                cursor.moveToFirst();
+                    }
+                    cursor2.close();
 
-
-                String name = cursor.getString(1);
-                ContactName.setText(name);
-
-                String phoneNumber = cursor.getString(2);
-                PhoneNumber.setText(phoneNumber);
-
-                String emailAddress = cursor.getString(3);
-                EmailAddress.setText(emailAddress);
-
-
-
-            }
-            finally
-            {
-
+                }
                 cursor.close();
             }
-        }
-    }
-    @Override
-    public void onClick(View view) {
 
+
+        }
 
     }
 
