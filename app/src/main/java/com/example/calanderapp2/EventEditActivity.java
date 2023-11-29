@@ -64,15 +64,33 @@ public class EventEditActivity extends AppCompatActivity {
     public static String phone;
 
     public HashMap<String, String> contactList = new HashMap<>();
-    private Button backButton;
+
+    private EditText number;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
         initWidgets();
+
         eventDateTV.setText("Date: " + CalendarUtility.formattedDate(CalendarUtility.selectedDate));
+        Button enterContact = findViewById(R.id.enter);
+        enterContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ContextCompat.checkSelfPermission(EventEditActivity.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+                    number = findViewById(R.id.number);
+                    phone=number.getText().toString();
+                    sendSms();
+                }
+                else{
+                    ActivityCompat.requestPermissions(EventEditActivity.this,new String[]{Manifest.permission.SEND_SMS}, 100);
+                }
+            }
+        });
 
 
+//+1 555 123 4567
 
 
         final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -106,11 +124,13 @@ public class EventEditActivity extends AppCompatActivity {
         sendInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(ContextCompat.checkSelfPermission(EventEditActivity.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+               if(ContextCompat.checkSelfPermission(EventEditActivity.this, Manifest.permission.SEND_SMS)
+                       == PackageManager.PERMISSION_GRANTED) {
                     sendSms();
                }
                else{
-                   ActivityCompat.requestPermissions(EventEditActivity.this,new String[]{Manifest.permission.SEND_SMS}, 100);
+                   ActivityCompat.requestPermissions(EventEditActivity.this,new String[]{Manifest.permission.SEND_SMS},
+                           100);
                }
             }
         });
@@ -123,10 +143,10 @@ public class EventEditActivity extends AppCompatActivity {
         if(!phone.isEmpty() && !message.isEmpty()) {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(phoneNum,null,message,null,null);
-            Toast.makeText(getApplicationContext(), "successful"  , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Successful" , Toast.LENGTH_SHORT).show();
         }
         else{
-            Toast.makeText(getApplicationContext(), "Unsuccessful" , Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
         }
     }
 

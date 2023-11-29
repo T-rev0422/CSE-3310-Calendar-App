@@ -130,7 +130,6 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
             cursor = getContentResolver().query(uri, null, null, null, null);
             if (cursor.moveToFirst()) {
 
-
                 @SuppressLint("Range") String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
                 @SuppressLint("Range") String idRes = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
                 int intIdRes = Integer.parseInt(idRes);
@@ -148,10 +147,8 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
                         PhoneNumber.setText(number);
                         contactList.put(contactName,number);
                         phone = number;
-
                     }
                     cursor2.close();
-
                 }
                 cursor.close();
             }

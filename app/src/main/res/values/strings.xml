@@ -49,6 +49,7 @@
     <string name="return_to_monthly_view">Return to Monthly View</string>
     <string name="send_invite">Send invite</string>
     <string name="_name">Name</string>
+    <string name="enter_contact">enter contact</string>
     />
 
 </resources>
