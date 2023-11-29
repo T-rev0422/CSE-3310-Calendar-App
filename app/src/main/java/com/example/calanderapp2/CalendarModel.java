@@ -4,14 +4,27 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class CalendarModel {
-    private String calendarName;
-    private List<Event> events;
+    private static CalendarModel instance;
+    private String currentCalendarId;
 
-    public CalendarModel(String calendarName) {
-        this.calendarName = calendarName;
-        this.events = new ArrayList<>();
+    private CalendarModel() {
+        // Private constructor to prevent instantiation
     }
-    public String getCalendarName() {
-        return calendarName;
+
+    public static CalendarModel getInstance() {
+        if (instance == null) {
+            instance = new CalendarModel();
+            instance.setCurrentCalendarId("My Calendar");
+        }
+        return instance;
+    }
+
+    public String getCurrentCalendarId() {
+        return currentCalendarId;
+    }
+
+    public void setCurrentCalendarId(String calendarId) {
+        this.currentCalendarId = calendarId;
     }
 }
+

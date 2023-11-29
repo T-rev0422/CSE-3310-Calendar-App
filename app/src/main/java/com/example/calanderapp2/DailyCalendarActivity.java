@@ -70,11 +70,12 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-
+                        viewCalendars(view);
 
                         break;
                     case 1:
                         //saved contacts page UC 6;
+
                         openContactsActivity();
 
                         break;
@@ -86,7 +87,11 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
 
     }
 
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
 
+    }
 
     public void openContactsActivity() {
         startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
@@ -126,17 +131,20 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
     }
 
     private ArrayList<HourEvent> hourEventList() {
+        String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
         ArrayList<HourEvent> hourList = new ArrayList<>();
-        for(int hour=0;hour<24;hour++){
-            LocalTime time = LocalTime.of(hour,0);
-            String eventTime = String.format("%02d:00", hour);
-            ArrayList<Event> events = Event.eventsForDateAndTime(selectedDate,eventTime);
-            HourEvent hourEvent = new HourEvent(time,events);
+
+
+        for (int hour = 0; hour < 24; hour++) {
+            LocalTime time = LocalTime.of(hour, 0);
+            ArrayList<Event> events = Event.eventsForDateAndTimeAndCalendarId(selectedDate, time, currentCalendarId);
+            HourEvent hourEvent = new HourEvent(time, events);
             hourList.add(hourEvent);
         }
-        return hourList;
 
+        return hourList;
     }
+
 
     public void previousDay(View view) {
         CalendarUtility.selectedDate = CalendarUtility.selectedDate.minusDays(1);

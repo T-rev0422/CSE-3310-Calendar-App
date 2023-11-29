@@ -38,6 +38,11 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
         initWidgets();
+
+        //Retrieve calendarId from Intent
+        Intent intent = getIntent();
+        String calendarId = intent.getStringExtra("calendarId");
+
         setWeek();
 
         autoCompleteTextView = findViewById(R.id.selectView);
@@ -67,7 +72,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
                 switch(i) {
                     case 0:
                         //view calendars UC 5;
-                        //viewCalendars(view);
+                        viewCalendars(view);
 
                         break;
                     case 1:
@@ -81,6 +86,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         });
 
     }
+
+    public void viewCalendars(View viw) {
+        Intent intent = new Intent(this, CalendarListActivity.class);
+        startActivity(intent);
+
+    }
+
     public void openContactsActivity() {
         startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
 
@@ -105,10 +117,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
     private void setEventAdapter() {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtility.selectedDate);
-        EventAdapter  eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
+        ArrayList<Event> events = Event.eventsForDateAndCalendarId(CalendarUtility.selectedDate, currentCalendarId);
+
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), events);
         eventListView.setAdapter(eventAdapter);
     }
+
 
 
     public void previousWeek(View view) {
@@ -125,6 +140,12 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     public void onItemClick(int position, LocalDate date) {
         CalendarUtility.selectedDate = date;
         setWeek();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        setEventAdapter();
     }
 
     public void newEvent(View view) {

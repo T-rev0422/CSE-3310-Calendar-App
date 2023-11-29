@@ -24,7 +24,8 @@
         android:layout_gravity="center"
         android:textSize="20sp"
         android:ems="10"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:hint="Enter event name"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -62,7 +63,9 @@
         android:layout_gravity="center"
         android:textSize="20sp"
         android:ems="10"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:hint="Enter event time"/>
+
 
     <Button
         android:id="@+id/enter"
@@ -112,8 +115,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="@string/phone_number" />
-
-
 
     <Button
         android:id="@+id/sendInvite"

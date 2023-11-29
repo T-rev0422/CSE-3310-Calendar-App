@@ -1,4 +1,3 @@
-/*
 package com.example.calanderapp2;
 
 import java.time.LocalDate;
@@ -9,30 +8,42 @@ import java.util.ArrayList;
 public class Event {
     public static ArrayList<Event> eventList = new ArrayList<>();
 
+    public static ArrayList<Event> eventsForDateAndCalendarId(LocalDate date, String calendarId) {
 
-    public static ArrayList<Event> eventsForDate(LocalDate date)
-    {
         ArrayList<Event> events = new ArrayList<>();
 
-        for(Event event : eventList)
-        {
-            if(event.getDate().equals(date))
+        for (Event event : eventList) {
+            if (event.getDate().equals(date) && event.getCalendarId().equals(calendarId)) {
                 events.add(event);
+            }
         }
 
         return events;
     }
 
-    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, LocalTime time)
-    {
+
+    public static ArrayList<Event> eventsForDateAndTimeAndCalendarId(LocalDate date, LocalTime time, String calendarId) {
         ArrayList<Event> events = new ArrayList<>();
 
-        for(Event event : eventList)
-        {
+        for (Event event : eventList) {
             int eventHour = event.time.getHour();
             int cellHour = time.getHour();
-            if(event.getDate().equals(date) && eventHour == cellHour)
+            if (event.getDate().equals(date) && eventHour == cellHour && event.getCalendarId().equals(calendarId)) {
                 events.add(event);
+            }
+        }
+
+        return events;
+    }
+
+
+    public static ArrayList<Event> eventsForCalendarId(String calendarId) {
+        ArrayList<Event> events = new ArrayList<>();
+
+        for (Event event : eventList) {
+            if (event.calendarId.equals(calendarId)) {
+                events.add(event);
+            }
         }
 
         return events;
@@ -63,71 +74,7 @@ public class Event {
         return eventName;
     }
 
-    public String calendarId() {
-        return calendarId;
-    }
-}
-*/
-package com.example.calanderapp2;
-
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.ArrayList;
-
-public class Event {
-    public static ArrayList<Event> eventList = new ArrayList<>();
-
-    public static ArrayList<Event> eventsForDate(LocalDate date)
-    {
-        ArrayList<Event> events = new ArrayList<>();
-
-        for(Event event : eventList)
-        {
-            if(event.getDate().equals(date))
-                events.add(event);
-        }
-
-        return events;
-    }
-
-    public static ArrayList<Event> eventsForDateAndTime(LocalDate date, String eventTime)
-    {
-        ArrayList<Event> events = new ArrayList<>();
-
-        for(Event event : eventList)
-        {
-            if(event.getDate().equals(date) && event.getEventTime().equals(eventTime))
-                events.add(event);
-        }
-
-        return events;
-    }
-
-    private String eventName;
-    private LocalDate date;
-    private String eventTime;
-    private String calendarId;
-
-    public Event(String eventName, LocalDate date, String eventTime)
-    {
-        this.eventName = eventName;
-        this.date = date;
-        this.eventTime = eventTime;
-    }
-
-    private LocalDate getDate() {
-        return date;
-    }
-
-    public String getEventTime() {
-        return eventTime;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public String calendarId() {
+    public String getCalendarId() {
         return calendarId;
     }
 }
