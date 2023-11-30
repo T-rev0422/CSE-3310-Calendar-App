@@ -47,6 +47,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 
 
@@ -66,31 +68,17 @@ public class EventEditActivity extends AppCompatActivity {
     public HashMap<String, String> contactList = new HashMap<>();
 
     private EditText number;
-
+    private LocalTime time;
+    private int buttonCheck=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
+        time = LocalTime.now();
         initWidgets();
 
         eventDateTV.setText("Date: " + CalendarUtility.formattedDate(CalendarUtility.selectedDate));
-        Button enterContact = findViewById(R.id.enter);
-        enterContact.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(ContextCompat.checkSelfPermission(EventEditActivity.this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
-                    number = findViewById(R.id.number);
-                    phone=number.getText().toString();
-                    sendSms();
-                }
-                else{
-                    ActivityCompat.requestPermissions(EventEditActivity.this,new String[]{Manifest.permission.SEND_SMS}, 100);
-                }
-            }
-        });
 
-
-//+1 555 123 4567
 
 
         final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
@@ -114,6 +102,7 @@ public class EventEditActivity extends AppCompatActivity {
 
         ContactPick.setOnClickListener(view -> {
             pickContactLauncher.launch(pickContact);
+            buttonCheck = 1;
         });
 
 
@@ -126,6 +115,15 @@ public class EventEditActivity extends AppCompatActivity {
             public void onClick(View v) {
                if(ContextCompat.checkSelfPermission(EventEditActivity.this, Manifest.permission.SEND_SMS)
                        == PackageManager.PERMISSION_GRANTED) {
+                   if(buttonCheck == 0){ //user enters the contact number manually
+                       number = findViewById(R.id.number);
+                       phone = number.getText().toString();
+                   }
+                   else{
+                       phone = PhoneNumber.getText().toString(); //user gets contact from contacts app
+
+                   }
+
                     sendSms();
                }
                else{
@@ -240,9 +238,17 @@ public class EventEditActivity extends AppCompatActivity {
     }
 
     public void saveEventAction(View view){
+        String timeStr = eventTimeET.getText().toString();
+        //if the user enters eg 2:00 instead of 02:00
+        if(timeStr.length() == 4) {
+            timeStr = '0' + timeStr;
+        }
+
+        time= LocalTime.parse(timeStr);
+
+        String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
         String eventName = eventNameET.getText().toString();
-        String eventTime = eventTimeET.getText().toString();
-        Event newEvent = new Event(eventName, CalendarUtility.selectedDate, eventTime);
+        Event newEvent = new Event(eventName, CalendarUtility.selectedDate, time, currentCalendarId);
         Event.eventList.add(newEvent);
         finish();
     }

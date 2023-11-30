@@ -2,14 +2,12 @@ package com.example.calanderapp2;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
 import java.util.ArrayList;
 
 public class Event {
     public static ArrayList<Event> eventList = new ArrayList<>();
 
     public static ArrayList<Event> eventsForDateAndCalendarId(LocalDate date, String calendarId) {
-
         ArrayList<Event> events = new ArrayList<>();
 
         for (Event event : eventList) {

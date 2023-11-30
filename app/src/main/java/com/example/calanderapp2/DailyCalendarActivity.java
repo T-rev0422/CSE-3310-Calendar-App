@@ -134,7 +134,6 @@ public class DailyCalendarActivity extends AppCompatActivity implements  Calenda
         String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
         ArrayList<HourEvent> hourList = new ArrayList<>();
 
-
         for (int hour = 0; hour < 24; hour++) {
             LocalTime time = LocalTime.of(hour, 0);
             ArrayList<Event> events = Event.eventsForDateAndTimeAndCalendarId(selectedDate, time, currentCalendarId);
