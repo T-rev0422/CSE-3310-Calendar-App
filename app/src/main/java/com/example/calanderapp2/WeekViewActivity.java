@@ -32,7 +32,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     AutoCompleteTextView autoCompleteTextViewMenu;
     ArrayAdapter<String>adapterItemsMenu;
 
-    String[] menuOptions= {"View Calendars","Saved Contacts"};
+    String[] menuOptions= {"View Calendars","Saved Contacts", "View Reminders"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +79,10 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
                         //saved contacts page UC 6;
                         openContactsActivity();
                         break;
+                    case 2:
+                        //view own reminders notification list
+                        viewReminders();
+                        break;
 
 
                 }
@@ -86,7 +90,9 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         });
 
     }
-
+    public void viewReminders() {
+        startActivity(new Intent(this, ReminderList.class));
+    }
     public void viewCalendars(View viw) {
         Intent intent = new Intent(this, CalendarListActivity.class);
         startActivity(intent);

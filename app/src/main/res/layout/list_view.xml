@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/eventNameListView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/black"
+        android:hint="Event Name"/>
+
+    <TextView
+        android:id="@+id/eventDateListView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/black"
+        android:hint="Event Date"/>
+
+    <TextView
+        android:id="@+id/eventTimeListView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/black"
+        android:hint="Event Time"/>
+
+    <TextView
+        android:id="@+id/reminderDateListView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/black"
+        android:hint="Reminder Date"/>
+    <TextView
+        android:id="@+id/reminderTimeListView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/black"
+        android:hint="Reminder Time"/>
+
+
+</LinearLayout>

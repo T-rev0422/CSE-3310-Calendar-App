@@ -124,34 +124,31 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
         if (resultCode != Activity.RESULT_OK) return;
 
         if (requestCode == REQUEST_CONTACT && data != null) {
-            Cursor cursor;
+            Cursor cur;
 
             Uri uri = data.getData();
-            cursor = getContentResolver().query(uri, null, null, null, null);
-            if (cursor.moveToFirst()) {
+            cur = getContentResolver().query(uri, null, null, null, null);
+            if (cur.moveToNext()) {
+                String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
-                @SuppressLint("Range") String contactName = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                @SuppressLint("Range") String idRes = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                int intIdRes = Integer.parseInt(idRes);
 
-                if (intIdRes == 1) {
-                    Cursor cursor2 = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
-                            null,
-                            ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
-                            null,
-                            null);
+                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
 
-                    while (cursor2.moveToNext()) {
-                        @SuppressLint("Range") String number = cursor2.getString(cursor2.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        ContactName.setText(contactName);
-                        PhoneNumber.setText(number);
-                        contactList.put(contactName,number);
-                        phone = number;
+                    Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
+                    while (phones.moveToNext()) {
+                        String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                        ContactName.setText(name);
+                        PhoneNumber.setText(phoneNumber);
+                        contactList.put(name, phoneNumber);
+                        phone = phoneNumber;
                     }
-                    cursor2.close();
+                    phones.close();
                 }
-                cursor.close();
+
             }
+            cur.close();
+
 
 
         }

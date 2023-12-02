@@ -3,6 +3,7 @@ package com.example.calanderapp2;
 import static com.example.calanderapp2.CalendarUtility.daysInMonth;
 import static com.example.calanderapp2.CalendarUtility.monthYearFromDate;
 
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,7 +18,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.TextView;
 
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     ArrayAdapter<String>adapterItemsMenu;
     ArrayAdapter<String>adapterItems;
     String[] views= {"Day","Week"};
-    String[] menuOptions= {"View Calendars","Saved Contacts"};
+    String[] menuOptions= {"View Calendars","Saved Contacts", "View Reminders"};
 
 
 
@@ -61,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                     case 1:
                         weeklyAction(view);
                         break;
+
                 }
             }
         });
@@ -82,11 +83,21 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                         openContactsActivity();
 
                         break;
+                    case 2:
+                        //view own reminders notification list
+                        viewReminders();
+                        break;
+
 
                 }
             }
         });
 
+    }
+
+    public void viewReminders() {
+
+        startActivity(new Intent(this, ReminderList.class));
     }
 
     public void viewCalendars(View viw) {

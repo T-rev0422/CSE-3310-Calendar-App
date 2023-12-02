@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="40dp"
+
         android:text="Date"
         android:textSize="20sp"
         android:textAlignment="center"
@@ -113,11 +113,13 @@
         android:layout_gravity="center"
         android:text="@string/phone_number" />
 
+
+
     <Button
         android:id="@+id/sendInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_gravity="center"
         android:background="@null"
         android:text="@string/send_invite"
@@ -125,15 +127,38 @@
         android:textSize="20sp"/>
 
     <Button
+        android:id="@+id/sendReminderInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:text="Send Reminder Message to Contacts"
+        android:textColor="@color/white"
+        android:textSize="15sp"/>
+
+    <Button
+        android:id="@+id/sendReminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:background="@null"
+        android:text="Schedule Own Reminder Notification"
+        android:textColor="@color/white"
+        android:textSize="15sp"/>
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:background="@null"
         android:text="Save"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:onClick="saveEventAction"
+
         android:textSize="20sp"/>
 
 
