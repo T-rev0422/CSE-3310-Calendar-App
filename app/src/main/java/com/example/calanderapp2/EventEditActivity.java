@@ -47,7 +47,7 @@ public class EventEditActivity extends AppCompatActivity {
 
     public static String phone;
 
-    public HashMap<String, String> contactList = new HashMap<>();
+    public static HashMap<String, String> contactList = new HashMap<>();
 
     private EditText number;
     private LocalTime time;
