@@ -46,6 +46,7 @@ public class EventEditActivity extends AppCompatActivity {
     private TextView PhoneNumber;
 
     public static String phone;
+    public static String name;
 
     public static HashMap<String, String> contactList = new HashMap<>();
 
@@ -57,7 +58,9 @@ public class EventEditActivity extends AppCompatActivity {
     private static ArrayList<String> eventNameList = new ArrayList<>();
     private static ArrayList<String> eventTimeList = new ArrayList<>();
     private static ArrayList<String> phoneList = new ArrayList<>();
-
+    private static ArrayList<String> eventContacts = new ArrayList<>();
+    private static ArrayList<String> nameList = new ArrayList<>();
+    private static ArrayList<String> numberList = new ArrayList<>();
 
    // public ArrayList<Model> dataHolder = new ArrayList<Model>();
     @Override
@@ -97,6 +100,19 @@ public class EventEditActivity extends AppCompatActivity {
         requestContactsPermission();
         updateButton(hasContactsPermission());
 
+        Button viewContacts = findViewById(R.id.viewContacts);
+        viewContacts.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(getApplicationContext(), EventContacts.class);
+                intent.putExtra("name", name);
+
+                startActivity(intent);
+
+
+            }
+        });
         Button sendInvite = findViewById(R.id.sendInvite);
         sendInvite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +128,9 @@ public class EventEditActivity extends AppCompatActivity {
                     }
 
                     sendSms();
-                    insertInDB(eventNameET.getText().toString(),CalendarUtility.formattedDate(CalendarUtility.selectedDate),eventTimeET.getText().toString(), phone);
+                    Toast.makeText(getApplicationContext(), "name: " + name, Toast.LENGTH_SHORT).show();
+
+                    insertInDB(eventNameET.getText().toString(),CalendarUtility.formattedDate(CalendarUtility.selectedDate),eventTimeET.getText().toString(), phone, name);
 
                 } else {
                     ActivityCompat.requestPermissions(EventEditActivity.this, new String[]{Manifest.permission.SEND_SMS},
@@ -137,8 +155,9 @@ public class EventEditActivity extends AppCompatActivity {
                 eventNameList.clear();
                 eventTimeList.clear();
                 phoneList.clear();
+                nameList.clear();
                 while (cursor.moveToNext()) {
-                    ModelForContactReminderSMS modelForContactReminderSMS = new ModelForContactReminderSMS(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+                    ModelForContactReminderSMS modelForContactReminderSMS = new ModelForContactReminderSMS(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
                     dataHolder.add(modelForContactReminderSMS);
                 }
 
@@ -148,7 +167,7 @@ public class EventEditActivity extends AppCompatActivity {
                     phoneList.add(dataHolder.get(i).getPhone());
                     eventDateList.add(dataHolder.get(i).getEventDate());
                     eventTimeList.add(dataHolder.get(i).getEventTime());
-
+                    nameList.add(dataHolder.get(i).getPerson());
                 }
 
 
@@ -192,6 +211,7 @@ public class EventEditActivity extends AppCompatActivity {
                 eventNameList.clear();
                 eventTimeList.clear();
                 phoneList.clear();
+                nameList.clear();
             }
 
         });
@@ -209,6 +229,7 @@ public class EventEditActivity extends AppCompatActivity {
                 intent.putExtra("title", eventNameET.getText().toString());
                 intent.putExtra("date", CalendarUtility.formattedDate(CalendarUtility.selectedDate));
                 intent.putExtra("time", eventTimeET.getText().toString());
+                intent.putExtra("person", name);
                 startActivity(intent);
 
 
@@ -247,8 +268,8 @@ public class EventEditActivity extends AppCompatActivity {
         });
 
     }
-    private void insertInDB(String eventName, String eventDate, String eventTime, String phone) {
-        Toast.makeText(getApplicationContext(), new dbManagerForContactReminderSMS(this).addReminder(eventName, eventDate,eventTime, phone) , Toast.LENGTH_SHORT).show();
+    private void insertInDB(String eventName, String eventDate, String eventTime, String phone, String person) {
+        Toast.makeText(getApplicationContext(), new dbManagerForContactReminderSMS(this).addReminder(eventName, eventDate,eventTime, phone, person) , Toast.LENGTH_SHORT).show();
 
     }
 
@@ -318,7 +339,7 @@ public class EventEditActivity extends AppCompatActivity {
             cur = getContentResolver().query(uri, null, null, null, null);
             if (cur.moveToNext()) {
                 String id = cur.getString(cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                name = cur.getString(cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
 
 
                 if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
@@ -328,7 +349,8 @@ public class EventEditActivity extends AppCompatActivity {
                         String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         ContactName.setText(name);
                         PhoneNumber.setText(phoneNumber);
-                        contactList.put(name, phoneNumber);
+                        nameList.add(name);
+                        numberList.add(phoneNumber);
                         phone = phoneNumber;
                     }
                     phones.close();

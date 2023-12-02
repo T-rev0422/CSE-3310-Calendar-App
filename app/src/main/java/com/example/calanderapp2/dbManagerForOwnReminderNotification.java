@@ -47,7 +47,7 @@ public class dbManagerForOwnReminderNotification extends SQLiteOpenHelper {
         float result = database.insert("tbl_reminder", null, contentValues);    //returns -1 if data successfully inserts into database
 
         if (result == -1) {
-            return "Failed";
+            return "Failed Notification";
         } else {
             return "Successfully inserted into dbForOwnReminders";
 
@@ -63,7 +63,9 @@ public class dbManagerForOwnReminderNotification extends SQLiteOpenHelper {
         String q2 = "create table tbl_reminder(id integer primary key autoincrement,eventName text,eventDate text,eventTime text,reminderDate text, reminderTime text)";
         SQLiteDatabase db= this.getWritableDatabase();
         db.execSQL(q2);
+
 */
+
 
 
         String query = "select * from tbl_reminder order by id desc";                               //Sql query to  retrieve  data from the database

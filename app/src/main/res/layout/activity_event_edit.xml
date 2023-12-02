@@ -114,17 +114,23 @@
         android:text="@string/phone_number" />
 
 
-
     <Button
         android:id="@+id/sendInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center"
         android:background="@null"
         android:text="@string/send_invite"
         android:textColor="@color/white"
         android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/viewContacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="View all Event to Contacts" />
 
     <Button
         android:id="@+id/sendReminderInvite"

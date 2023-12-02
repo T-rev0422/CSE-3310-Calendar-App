@@ -21,7 +21,7 @@ public class dbManagerForContactReminderSMS extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         //sql query to insert data in sqllite
-        String query = "create table tbl_reminderContacts(id integer primary key autoincrement,eventName text,eventDate text,eventTime text,phone text)";
+        String query = "create table tbl_reminderContacts(id integer primary key autoincrement,eventName text,eventDate text,eventTime text,phone text, person text)";
         sqLiteDatabase.execSQL(query);
     }
 
@@ -34,7 +34,7 @@ public class dbManagerForContactReminderSMS extends SQLiteOpenHelper {
 
     }
 
-    public String addReminder(String eventName, String eventDate, String eventTime, String phone) {
+    public String addReminder(String eventName, String eventDate, String eventTime, String phone, String person) {
 
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -44,11 +44,12 @@ public class dbManagerForContactReminderSMS extends SQLiteOpenHelper {
         contentValues.put("eventDate", eventDate);
         contentValues.put("eventTime", eventTime);
         contentValues.put("phone", phone);
+        contentValues.put("person", person);
 
         float result = database.insert("tbl_reminderContacts", null, contentValues);    //returns -1 if data successfully inserts into database
 
         if (result == -1) {
-            return "Failed";
+            return "Failed SMS Reminder";
         } else {
 
             return "Successfully inserted into dbForContactReminders";
@@ -62,7 +63,7 @@ public class dbManagerForContactReminderSMS extends SQLiteOpenHelper {
 /*
         String q = "DROP TABLE IF EXISTS tbl_reminderContacts";                                         //sql query to check table with the same name or not
         database.execSQL(q);
-        String q2 = "create table tbl_reminderContacts(id integer primary key autoincrement,eventName text,eventDate text,eventTime text,phone text)";
+        String q2 = "create table tbl_reminderContacts(id integer primary key autoincrement,eventName text,eventDate text,eventTime text,phone text, person text)";
         SQLiteDatabase db= this.getWritableDatabase();
         db.execSQL(q2);
 */

@@ -2,14 +2,15 @@ package com.example.calanderapp2;
 
 
 public class ModelForContactReminderSMS {
-    String eventName, eventDate, eventTime, phone;
+    String eventName, eventDate, eventTime, phone, person;
     public ModelForContactReminderSMS() {
     }
-    public ModelForContactReminderSMS(String eventName, String eventDate, String eventTime, String phone) {
+    public ModelForContactReminderSMS(String eventName, String eventDate, String eventTime, String phone, String person) {
         this.eventName = eventName;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
         this.phone = phone;
+        this.person = person;
     }
     public String getEventName() {
         return eventName;
@@ -22,6 +23,9 @@ public class ModelForContactReminderSMS {
     }
     public String getPhone() {
         return phone;
+    }
+    public String getPerson() {
+        return person;
     }
     public void setEventName(String eventName) {
         this.eventName = eventName;

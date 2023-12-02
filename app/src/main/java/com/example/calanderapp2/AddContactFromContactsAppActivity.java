@@ -41,7 +41,7 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
     public static String phone;
     String name, phoneNumber;
 
-    //public HashMap<String, String> contactList = new HashMap<>();
+
     private Button backButton;
     private Button add;
     ListView simpleListView;

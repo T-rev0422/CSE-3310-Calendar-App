@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/eventNameView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/black"
+        android:hint="Event Name"/>
+
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textColor="@color/black"
+        android:hint="Contact Name"/>
+
+
+    <TextView
+        android:id="@+id/phoneView"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:textColor="@color/black"
+        android:hint="Contact Number"/>
+
+
+
+
+</LinearLayout>

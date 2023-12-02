@@ -41,7 +41,7 @@ public class ReminderActivity extends AppCompatActivity {
         String name = getIntent().getStringExtra("title"); //title = name of event
         eventDate2 = getIntent().getStringExtra("date"); //date = date of event
         eventTime = getIntent().getStringExtra("time"); //time = time of event
-
+        String person = getIntent().getStringExtra("person"); //time = time of event
         eventNameTV = (TextView) findViewById(R.id.reminderDetails);
         String eventName = "Event Name: " + name;
         String eventDate = "Event Date: " + eventDate2;
@@ -80,7 +80,7 @@ public class ReminderActivity extends AppCompatActivity {
                 }
                 else {
                     //insert into database the name of event, date, time,
-                    insertInDB(name, eventDate2, eventTime, date, time);
+                    insertInDb(name, eventDate2, eventTime, date, time);
 
                     if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         NotificationChannel channel = new NotificationChannel("My Notification","My Notification",NotificationManager.IMPORTANCE_DEFAULT);
@@ -138,7 +138,7 @@ public class ReminderActivity extends AppCompatActivity {
 
         });
     }
-    private void insertInDB(String name, String eventDate2, String eventTime, String date, String time) {
+    private void insertInDb(String name, String eventDate2, String eventTime, String date, String time) {
         //insert into database
          new dbManagerForOwnReminderNotification(this).addReminder(name, eventDate2, eventTime, date,time);
 
