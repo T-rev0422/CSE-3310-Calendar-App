@@ -35,10 +35,14 @@ import java.util.Locale;
 
 
 public class EventEditActivity extends AppCompatActivity {
-    private EditText eventNameET, eventTimeET;
+
+    private static final int RESULT_ADD_CONTACT = 0;
+    private static final int REQUEST_ADD_CONTACT = 0;
+    private EditText eventNameET, eventTimeET, contactName,contactNumber;
     private TextView eventDateTV;
     private Button contactButton;
     private static final int REQUEST_CONTACT = 1;
+    //private static final int REQUEST_ADD_CONTACT = 0;
     private static final int REQUEST_READ_CONTACTS_PERMISSION = 0;
     private Button ContactPick;
     private TextView ContactName;
@@ -67,16 +71,17 @@ public class EventEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_edit);
+
         time = LocalTime.now();
         initWidgets();
 
         eventDateTV.setText("Date: " + CalendarUtility.formattedDate(CalendarUtility.selectedDate));
 
         final Intent pickContact = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-
+/*
         ContactPick = findViewById(R.id.contact_pick);
-        ContactName = findViewById(R.id.contact_name);
-        PhoneNumber = findViewById(R.id.contact_number);
+        //ContactName = findViewById(R.id.name);
+        //PhoneNumber = findViewById(R.id.contact_number);
 
 
         ActivityResultLauncher<Intent> pickContactLauncher = registerForActivityResult(
@@ -99,6 +104,28 @@ public class EventEditActivity extends AppCompatActivity {
 
         requestContactsPermission();
         updateButton(hasContactsPermission());
+*/
+        Button addContacts= findViewById(R.id.contacts);
+        final Intent addCon = new Intent(this,AddContactsActivity.class);
+
+        ActivityResultLauncher<Intent> addContactsLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+
+                    // Handle the result of picking a contact here
+                    Intent data = result.getData();
+                    onActivityResult2(REQUEST_ADD_CONTACT,result.getResultCode() ,data);
+
+
+                }
+        );
+        addContacts.setOnClickListener(view -> {
+            addContactsLauncher.launch(addCon);
+            buttonCheck = 1;
+        });
+
+
+
 
         Button viewContacts = findViewById(R.id.viewContacts);
         viewContacts.setOnClickListener(new View.OnClickListener() {
@@ -113,19 +140,22 @@ public class EventEditActivity extends AppCompatActivity {
 
             }
         });
+
         Button sendInvite = findViewById(R.id.sendInvite);
         sendInvite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (ContextCompat.checkSelfPermission(EventEditActivity.this, Manifest.permission.SEND_SMS)
                         == PackageManager.PERMISSION_GRANTED) {
-                    if (buttonCheck == 0) { //user enters the contact number manually
-                        number = findViewById(R.id.number);
-                        phone = number.getText().toString();
-                    } else {
-                        phone = PhoneNumber.getText().toString(); //user gets contact from contacts app
+                    //if (buttonCheck == 0) { //user enters the contact number manually
+                        //number = findViewById(R.id.number);
+                        //number = findViewById(R.id.number);
+                        phone = contactNumber.getText().toString();
+                        name = contactName.getText().toString();
+                   /// } else {
+                    //    phone = PhoneNumber.getText().toString(); //user gets contact from contacts app
 
-                    }
+                   // }
 
                     sendSms();
                     Toast.makeText(getApplicationContext(), "name: " + name, Toast.LENGTH_SHORT).show();
@@ -326,7 +356,20 @@ public class EventEditActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    public void onActivityResult2(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_ADD_CONTACT && resultCode == Activity.RESULT_OK) {
+            String name2 = data.getStringExtra("name");
+            String phone2 = data.getStringExtra("phone");
+
+            contactName = findViewById(R.id.name);
+            contactNumber = findViewById(R.id.number);
+            contactName.setText(name2);
+            contactNumber.setText(phone2);
+
+        }
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -347,8 +390,7 @@ public class EventEditActivity extends AppCompatActivity {
                     Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
                     while (phones.moveToNext()) {
                         String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        ContactName.setText(name);
-                        PhoneNumber.setText(phoneNumber);
+
                         nameList.add(name);
                         numberList.add(phoneNumber);
                         phone = phoneNumber;

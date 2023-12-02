@@ -69,17 +69,33 @@
         android:inputType="text"
         android:hint="Enter event time"/>
 
-
+    <Button
+        android:id="@+id/contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Add Contacts" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="Phone Number"
+        android:text="Contact Information"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
+
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:ems="10"
+        android:hint="Enter contact name"
+        android:inputType="text"/>
 
     <EditText
         android:id="@+id/number"
@@ -88,37 +104,17 @@
         android:layout_gravity="center"
         android:textSize="20sp"
         android:ems="10"
-        android:hint="Enter phone number"
+        android:hint="Enter contact number"
         android:inputType="text"/>
 
 
-    <Button
-        android:id="@+id/contact_pick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/choose_from_contacts_app" />
-
-    <TextView
-        android:id="@+id/contact_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/contact_name" />
-
-    <TextView
-        android:id="@+id/contact_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/phone_number" />
 
 
     <Button
         android:id="@+id/sendInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:background="@null"
         android:text="@string/send_invite"

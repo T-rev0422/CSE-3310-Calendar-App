@@ -19,6 +19,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -83,6 +84,19 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
 
 
         simpleListView.setAdapter(forContactsAdapter);
+        simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                //Toast.makeText(getApplicationContext(), phoneNumber , Toast.LENGTH_SHORT).show();
+
+                setResult(Activity.RESULT_OK,
+                        new Intent().putExtra("name", name).putExtra("phone", phoneNumber));
+
+                finish();
+
+            }
+        });
 
         Button back= findViewById(R.id.backFromSavedContacts);
         back.setOnClickListener(new View.OnClickListener() {
