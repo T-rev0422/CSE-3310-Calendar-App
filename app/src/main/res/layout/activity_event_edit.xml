@@ -1,19 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".EventEditActivity">
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="240dp"
+        android:layout_height="60dp"
+        >
 
+        <AutoCompleteTextView
+            android:id="@+id/eventMenu"
+            android:hint="@string/menu"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:inputType="none" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/backFromEvent"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/white"
+        android:text="Back" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-
         android:text="Date"
         android:textSize="20sp"
+        android:layout_marginTop="60dp"
+        android:layout_marginStart="170dp"
         android:textAlignment="center"
         android:textColor="@color/black"/>
 
@@ -22,7 +46,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="100dp"
         android:textSize="20sp"
         android:text="Selected Date"/>
 
@@ -30,7 +55,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginStart="170dp"
         android:text="@string/_name"
         android:textSize="20sp"
         android:textAlignment="center"
@@ -41,6 +67,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="165dp"
+        android:layout_marginStart="80dp"
         android:textSize="20sp"
         android:ems="10"
         android:inputType="text"
@@ -53,7 +81,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="220dp"
+        android:layout_marginStart="170dp"
         android:text="Time"
         android:textSize="20sp"
         android:textAlignment="center"
@@ -64,6 +93,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="250dp"
+        android:layout_marginStart="80dp"
         android:textSize="20sp"
         android:ems="10"
         android:inputType="text"
@@ -74,13 +105,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="320dp"
+        android:layout_marginStart="110dp"
+        android:textSize="20sp"
         android:text="Add Contacts" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="380dp"
+        android:layout_marginStart="110dp"
         android:text="Contact Information"
         android:textSize="20sp"
         android:textAlignment="center"
@@ -92,6 +127,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="420dp"
+        android:layout_marginStart="80dp"
         android:textSize="20sp"
         android:ems="10"
         android:hint="Enter contact name"
@@ -102,6 +139,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginTop="460dp"
+        android:layout_marginStart="80dp"
         android:textSize="20sp"
         android:ems="10"
         android:hint="Enter contact number"
@@ -114,19 +153,21 @@
         android:id="@+id/sendInvite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="520dp"
+        android:layout_marginStart="125dp"
         android:layout_gravity="center"
         android:background="@null"
         android:text="@string/send_invite"
+
         android:textColor="@color/white"
         android:textSize="20sp"/>
-
+<!--
     <Button
         android:id="@+id/viewContacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="View all Event to Contacts" />
+        android:text="View All Contact Added To An Event" />
 
     <Button
         android:id="@+id/sendReminderInvite"
@@ -143,27 +184,27 @@
         android:id="@+id/sendReminder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
         android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:background="@null"
         android:text="Schedule Own Reminder Notification"
         android:textColor="@color/white"
-        android:textSize="15sp"/>
-
+        android:textSize="15sp" />
+-->
     <Button
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
+        android:layout_marginTop="580dp"
+        android:layout_marginStart="150dp"
         android:background="@null"
         android:text="Save"
         android:textColor="@color/white"
-        android:textStyle="bold"
+        android:textSize="20sp"
 
-        android:textSize="20sp"/>
-
-
+        android:textStyle="bold" />
 
 
-</LinearLayout>
+</RelativeLayout>

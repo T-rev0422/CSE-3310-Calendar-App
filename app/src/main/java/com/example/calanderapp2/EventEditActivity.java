@@ -19,6 +19,9 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.telephony.SmsManager;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -53,6 +56,12 @@ public class EventEditActivity extends AppCompatActivity {
     public static String name;
 
     public static HashMap<String, String> contactList = new HashMap<>();
+    AutoCompleteTextView autoCompleteTextView;
+    AutoCompleteTextView autoCompleteTextViewMenu;
+    ArrayAdapter<String>adapterItemsMenu;
+    ArrayAdapter<String>adapterItems;
+
+    String[] menuOptions= {"View All Contacts in Event","Send Reminders to Contacts", "Schedule Own Reminder Notification"};
 
     private EditText number;
     private LocalTime time;
@@ -105,6 +114,150 @@ public class EventEditActivity extends AppCompatActivity {
         requestContactsPermission();
         updateButton(hasContactsPermission());
 */
+        autoCompleteTextViewMenu = findViewById(R.id.eventMenu);
+        adapterItemsMenu = new ArrayAdapter<String>(this,R.layout.list_item,menuOptions);
+        autoCompleteTextViewMenu.setAdapter(adapterItemsMenu);
+        autoCompleteTextViewMenu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int j, long l) {
+                switch(j) {
+                    case 0:
+                        //view all contacts;
+                        /*
+                        Button viewContacts = findViewById(R.id.viewContacts);
+                        viewContacts.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+*/
+                                Intent intent = new Intent(getApplicationContext(), EventContacts.class);
+                                intent.putExtra("name", name);
+
+                                startActivity(intent);
+
+/*
+                            }
+                        });
+                        */
+
+                        break;
+                    case 1:
+                        //saved contacts page UC 6;
+                        /*
+                        Button sendRemInvite = findViewById(R.id.sendReminderInvite);
+                        sendRemInvite.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+                         */
+                                Cursor cursor = new dbManagerForContactReminderSMS(getApplicationContext()).readAllReminders();//Cursor To Load data From the database
+                                dataHolder.clear();
+                                eventDateList.clear();
+                                eventNameList.clear();
+                                eventTimeList.clear();
+                                phoneList.clear();
+                                nameList.clear();
+                                while (cursor.moveToNext()) {
+                                    ModelForContactReminderSMS modelForContactReminderSMS = new ModelForContactReminderSMS(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+                                    dataHolder.add(modelForContactReminderSMS);
+                                }
+
+
+                                for(int i = 0; i < dataHolder.size(); i++) {
+                                    eventNameList.add(dataHolder.get(i).getEventName());
+                                    phoneList.add(dataHolder.get(i).getPhone());
+                                    eventDateList.add(dataHolder.get(i).getEventDate());
+                                    eventTimeList.add(dataHolder.get(i).getEventTime());
+                                    nameList.add(dataHolder.get(i).getPerson());
+                                }
+
+
+
+                                for(int i = 0; i < dataHolder.size(); i++) {
+
+
+                                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
+
+                                    LocalDate eventDate2 = LocalDate.parse(eventDateList.get(i), formatter);
+                                    String dayBefore = eventDate2.minusDays(1).toString();
+
+
+                                    String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+                                    //send reminder only 1 day before event and only to people who you shared the event to
+                                    if(dayBefore.equals(currentDate) && phone.equals(dataHolder.get(i).getPhone())) {
+                                        String phoneNum = phone;
+
+                                        String message = "This is a reminder message." +
+                                                ".\nDetails of the event are as follows: \n" + "Event Name: " + dataHolder.get(i).getEventName() + "\nEvent Date: " + dataHolder.get(i).getEventDate() + "\nEvent Time: " + dataHolder.get(i).getEventTime() + ".";
+
+
+                                        if(!phone.isEmpty() && !message.isEmpty()) {
+                                            SmsManager smsManager = SmsManager.getDefault();
+                                            smsManager.sendTextMessage(phoneNum,null,message,null,null);
+                                            Toast.makeText(getApplicationContext(), "Successful" , Toast.LENGTH_SHORT).show();
+                                        }
+                                        else{
+                                            Toast.makeText(getApplicationContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
+                                        }
+
+                                    }
+
+
+                                }
+
+
+                                dataHolder.clear();
+                                eventDateList.clear();
+                                eventNameList.clear();
+                                eventTimeList.clear();
+                                phoneList.clear();
+                                nameList.clear();
+                                /*
+                            }
+
+                                 */
+                            break;
+/*
+                        });
+*/
+
+
+
+                    case 2:
+                        //schedule reminder notification for ownself
+                        /*
+                        Button sendReminder= findViewById(R.id.sendReminder);
+                        sendReminder.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+
+*/
+                                Intent intent2 = new Intent(getApplicationContext(), ReminderActivity.class);
+                                intent2.putExtra("title", eventNameET.getText().toString());
+                                intent2.putExtra("date", CalendarUtility.formattedDate(CalendarUtility.selectedDate));
+                                intent2.putExtra("time", eventTimeET.getText().toString());
+                                intent2.putExtra("person", name);
+                                startActivity(intent2);
+
+
+
+/*
+                            }
+
+                        });
+*/
+                        break;
+
+
+
+
+                }
+
+
+            }
+        });
+
+
         Button addContacts= findViewById(R.id.contacts);
         final Intent addCon = new Intent(this,AddContactsActivity.class);
 
@@ -119,7 +272,7 @@ public class EventEditActivity extends AppCompatActivity {
 
                 }
         );
-        addContacts.setOnClickListener(view -> {
+        addContacts.setOnClickListener(view2 -> {
             addContactsLauncher.launch(addCon);
             buttonCheck = 1;
         });
@@ -127,19 +280,7 @@ public class EventEditActivity extends AppCompatActivity {
 
 
 
-        Button viewContacts = findViewById(R.id.viewContacts);
-        viewContacts.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                Intent intent = new Intent(getApplicationContext(), EventContacts.class);
-                intent.putExtra("name", name);
-
-                startActivity(intent);
-
-
-            }
-        });
 
         Button sendInvite = findViewById(R.id.sendInvite);
         sendInvite.setOnClickListener(new View.OnClickListener() {
@@ -158,7 +299,7 @@ public class EventEditActivity extends AppCompatActivity {
                    // }
 
                     sendSms();
-                    Toast.makeText(getApplicationContext(), "name: " + name, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "name: " + name, Toast.LENGTH_SHORT).show();
 
                     insertInDB(eventNameET.getText().toString(),CalendarUtility.formattedDate(CalendarUtility.selectedDate),eventTimeET.getText().toString(), phone, name);
 
@@ -175,99 +316,8 @@ public class EventEditActivity extends AppCompatActivity {
 
         });
 
-        Button sendRemInvite = findViewById(R.id.sendReminderInvite);
-        sendRemInvite.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Cursor cursor = new dbManagerForContactReminderSMS(getApplicationContext()).readAllReminders();//Cursor To Load data From the database
-                dataHolder.clear();
-                eventDateList.clear();
-                eventNameList.clear();
-                eventTimeList.clear();
-                phoneList.clear();
-                nameList.clear();
-                while (cursor.moveToNext()) {
-                    ModelForContactReminderSMS modelForContactReminderSMS = new ModelForContactReminderSMS(cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
-                    dataHolder.add(modelForContactReminderSMS);
-                }
 
 
-                for(int i = 0; i < dataHolder.size(); i++) {
-                    eventNameList.add(dataHolder.get(i).getEventName());
-                    phoneList.add(dataHolder.get(i).getPhone());
-                    eventDateList.add(dataHolder.get(i).getEventDate());
-                    eventTimeList.add(dataHolder.get(i).getEventTime());
-                    nameList.add(dataHolder.get(i).getPerson());
-                }
-
-
-
-                for(int i = 0; i < dataHolder.size(); i++) {
-
-
-                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy");
-
-                    LocalDate eventDate2 = LocalDate.parse(eventDateList.get(i), formatter);
-                    String dayBefore = eventDate2.minusDays(1).toString();
-
-
-                    String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
-
-                    //send reminder only 1 day before event and only to people who you shared the event to
-                    if(dayBefore.equals(currentDate) && phone.equals(dataHolder.get(i).getPhone())) {
-                        String phoneNum = phone;
-
-                        String message = "This is a reminder message." +
-                                ".\nDetails of the event are as follows: \n" + "Event Name: " + dataHolder.get(i).getEventName() + "\nEvent Date: " + dataHolder.get(i).getEventDate() + "\nEvent Time: " + dataHolder.get(i).getEventTime() + ".";
-
-
-                        if(!phone.isEmpty() && !message.isEmpty()) {
-                            SmsManager smsManager = SmsManager.getDefault();
-                            smsManager.sendTextMessage(phoneNum,null,message,null,null);
-                            Toast.makeText(getApplicationContext(), "Successful" , Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(getApplicationContext(), "Unsuccessful", Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-
-
-                }
-
-
-                dataHolder.clear();
-                eventDateList.clear();
-                eventNameList.clear();
-                eventTimeList.clear();
-                phoneList.clear();
-                nameList.clear();
-            }
-
-        });
-
-
-
-       //schedule reminder notification for ownself
-        Button sendReminder= findViewById(R.id.sendReminder);
-        sendReminder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                Intent intent = new Intent(getApplicationContext(), ReminderActivity.class);
-                intent.putExtra("title", eventNameET.getText().toString());
-                intent.putExtra("date", CalendarUtility.formattedDate(CalendarUtility.selectedDate));
-                intent.putExtra("time", eventTimeET.getText().toString());
-                intent.putExtra("person", name);
-                startActivity(intent);
-
-
-
-
-            }
-
-        });
 
         Button save= findViewById(R.id.saveButton);
         save.setOnClickListener(new View.OnClickListener() {
@@ -292,6 +342,17 @@ public class EventEditActivity extends AppCompatActivity {
 
 
 
+
+            }
+
+        });
+
+        Button back= findViewById(R.id.backFromEvent);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                finish();
 
             }
 

@@ -40,9 +40,9 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
     private TextView PhoneNumber;
 
     public static String phone;
-    String name, phoneNumber;
+    private String name, phoneNumber;
 
-
+    Intent data;
     private Button backButton;
     private Button add;
     ListView simpleListView;
@@ -63,7 +63,7 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
                 result -> {
 
                     // Handle the result of picking a contact here
-                    Intent data = result.getData();
+                   data = result.getData();
                     onActivityResult(REQUEST_CONTACT,result.getResultCode() ,data);
 
 
@@ -84,6 +84,7 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
 
 
         simpleListView.setAdapter(forContactsAdapter);
+
         simpleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
@@ -91,7 +92,7 @@ public class AddContactFromContactsAppActivity extends AppCompatActivity {
                 //Toast.makeText(getApplicationContext(), phoneNumber , Toast.LENGTH_SHORT).show();
 
                 setResult(Activity.RESULT_OK,
-                        new Intent().putExtra("name", name).putExtra("phone", phoneNumber));
+                        new Intent().putExtra("name", nameList.get(position)).putExtra("phone", numberList.get(position)));
 
                 finish();
 
