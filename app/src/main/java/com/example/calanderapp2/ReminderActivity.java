@@ -41,7 +41,7 @@ public class ReminderActivity extends AppCompatActivity {
         String name = getIntent().getStringExtra("title"); //title = name of event
         eventDate2 = getIntent().getStringExtra("date"); //date = date of event
         eventTime = getIntent().getStringExtra("time"); //time = time of event
-        String person = getIntent().getStringExtra("person"); //time = time of event
+        String person = getIntent().getStringExtra("person");
         eventNameTV = (TextView) findViewById(R.id.reminderDetails);
         String eventName = "Event Name: " + name;
         String eventDate = "Event Date: " + eventDate2;

@@ -61,7 +61,7 @@ public class EventEditActivity extends AppCompatActivity {
     ArrayAdapter<String>adapterItemsMenu;
     ArrayAdapter<String>adapterItems;
 
-    String[] menuOptions= {"View Event Contacts","Remind Contacts", "Set Own Reminder"};
+    String[] menuOptions= {"View Event Contacts","Remind Contacts", "Set Own Reminder", "Multiple Dates"};
 
     private EditText number;
     private LocalTime time;
@@ -141,7 +141,7 @@ public class EventEditActivity extends AppCompatActivity {
 
                         break;
                     case 1:
-                        //saved contacts page UC 6;
+
                         /*
                         Button sendRemInvite = findViewById(R.id.sendReminderInvite);
                         sendRemInvite.setOnClickListener(new View.OnClickListener() {
@@ -184,14 +184,15 @@ public class EventEditActivity extends AppCompatActivity {
                                     String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
                                     //send reminder only 1 day before event and only to people who you shared the event to
-                                    if(dayBefore.equals(currentDate) && phone.equals(dataHolder.get(i).getPhone())) {
-                                        String phoneNum = phone;
+                                   // if(dayBefore.equals(currentDate) && phone.equals(dataHolder.get(i).getPhone())) {
+                                    if(dayBefore.equals(currentDate)) {
+                                        String phoneNum = dataHolder.get(i).getPhone();
 
                                         String message = "This is a reminder message." +
-                                                ".\nDetails of the event are as follows: \n" + "Event Name: " + dataHolder.get(i).getEventName() + "\nEvent Date: " + dataHolder.get(i).getEventDate() + "\nEvent Time: " + dataHolder.get(i).getEventTime() + ".";
+                                                "\nDetails of the event are as follows: \n" + "Event Name: " + dataHolder.get(i).getEventName() + "\nEvent Date: " + dataHolder.get(i).getEventDate() + "\nEvent Time: " + dataHolder.get(i).getEventTime() + ".";
 
 
-                                        if(!phone.isEmpty() && !message.isEmpty()) {
+                                        if(!phoneNum.isEmpty() && !message.isEmpty()) {
                                             SmsManager smsManager = SmsManager.getDefault();
                                             smsManager.sendTextMessage(phoneNum,null,message,null,null);
                                             Toast.makeText(getApplicationContext(), "Successful" , Toast.LENGTH_SHORT).show();
@@ -234,7 +235,8 @@ public class EventEditActivity extends AppCompatActivity {
 */
                                 Intent intent2 = new Intent(getApplicationContext(), ReminderActivity.class);
                                 intent2.putExtra("title", eventNameET.getText().toString());
-                                intent2.putExtra("date", CalendarUtility.formattedDate(CalendarUtility.selectedDate));
+
+                                intent2.putExtra("date",CalendarUtility.formattedDate(CalendarUtility.selectedDate));
                                 intent2.putExtra("time", eventTimeET.getText().toString());
                                 intent2.putExtra("person", name);
                                 startActivity(intent2);
@@ -246,6 +248,15 @@ public class EventEditActivity extends AppCompatActivity {
 
                         });
 */
+                        break;
+                    case 3:
+                        String dateTemp = CalendarUtility.formattedDate(CalendarUtility.selectedDate);
+                        Intent intent3 = new Intent(getApplicationContext(), MultipleDates.class);
+                        intent3.putExtra("title", eventNameET.getText().toString());
+                        intent3.putExtra("date", dateTemp);
+                        intent3.putExtra("time", eventTimeET.getText().toString());
+
+                        startActivity(intent3);
                         break;
 
 
