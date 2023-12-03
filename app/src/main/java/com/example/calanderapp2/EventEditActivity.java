@@ -61,7 +61,7 @@ public class EventEditActivity extends AppCompatActivity {
     ArrayAdapter<String>adapterItemsMenu;
     ArrayAdapter<String>adapterItems;
 
-    String[] menuOptions= {"View All Contacts in Event","Send Reminders to Contacts", "Schedule Own Reminder Notification"};
+    String[] menuOptions= {"View Event Contacts","Remind Contacts", "Set Own Reminder"};
 
     private EditText number;
     private LocalTime time;
