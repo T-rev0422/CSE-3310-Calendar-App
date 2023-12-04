@@ -32,13 +32,19 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     AutoCompleteTextView autoCompleteTextViewMenu;
     ArrayAdapter<String>adapterItemsMenu;
 
-    String[] menuOptions= {"View Calendars","Saved Contacts"};
+    String[] menuOptions= {"View Calendars","Saved Contacts", "View Reminders"};
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_week_view);
         initWidgets();
+        loadFromDBToMemory();
+        setOnClickListener();
+
+        //Retrieve calendarId from Intent
+        Intent intent = getIntent();
+        String calendarId = intent.getStringExtra("calendarId");
+
         setWeek();
 
         autoCompleteTextView = findViewById(R.id.selectView);
@@ -73,6 +79,11 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
                         break;
                     case 1:
                         //saved contacts page UC 6;
+                        openContactsActivity();
+                        break;
+                    case 2:
+                        //view own reminders notification list
+                        viewReminders();
                         break;
 
 
@@ -81,18 +92,49 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
         });
 
     }
+    public void viewReminders() {
+        startActivity(new Intent(this, ReminderList.class));
+    }
     public void viewCalendars(View viw) {
         Intent intent = new Intent(this, CalendarListActivity.class);
         startActivity(intent);
+
+    }
+
+    public void openContactsActivity() {
+        startActivity(new Intent(this, AddContactFromContactsAppActivity.class));
+
 
     }
     private void initWidgets() {
         //get both views
         monthYearText = findViewById(R.id.monthYearHeader);
         calendarRecyclerView = findViewById(R.id.calendarRecyclerView);
-        eventListView =     findViewById(R.id.eventListView);
+        eventListView = findViewById(R.id.eventListView);
 
     }
+
+    private void loadFromDBToMemory()
+    {
+        SQLiteManager sqLiteManager = SQLiteManager.instanceOfDatabase(this);
+        sqLiteManager.populateEventListArray();
+    }
+
+
+    private void setOnClickListener(){
+        eventListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l){
+                Event selectedEvent = (Event) eventListView.getItemAtPosition(position);
+                Intent editEventIntent = new Intent(getApplicationContext(), EventEditActivity.class);
+                editEventIntent.putExtra(Event.EVENT_EDIT_EXTRA, selectedEvent.getId());
+                startActivity(editEventIntent);
+            }
+        });
+    }
+
+
     private void setWeek() {
         monthYearText.setText(monthYearFromDate(CalendarUtility.selectedDate));
         ArrayList<LocalDate> days = daysInWeek(CalendarUtility.selectedDate);
@@ -105,10 +147,13 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
     }
 
     private void setEventAdapter() {
-        ArrayList<Event> dailyEvents = Event.eventsForDate(CalendarUtility.selectedDate);
-        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), dailyEvents);
+        String currentCalendarId = CalendarModel.getInstance().getCurrentCalendarId();
+        ArrayList<Event> events = Event.eventsForDateAndCalendarId(CalendarUtility.selectedDate, currentCalendarId);
+
+        EventAdapter eventAdapter = new EventAdapter(getApplicationContext(), Event.nonDeletedNotes());
         eventListView.setAdapter(eventAdapter);
     }
+
 
 
     public void previousWeek(View view) {
@@ -135,7 +180,7 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
     public void newEvent(View view) {
 
-        startActivity(new Intent(this,EventEditActivity.class));
+        // startActivity(new Intent(this,EventEditActivity.class));
     }
 
 
@@ -155,4 +200,5 @@ public class WeekViewActivity extends AppCompatActivity implements CalendarAdapt
 
         startActivity(new Intent(this, DailyCalendarActivity.class));
     }
+
 }
