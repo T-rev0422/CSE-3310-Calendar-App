@@ -249,6 +249,7 @@ public class EventEditActivity extends AppCompatActivity {
                         });
 */
                         break;
+
                     case 3:
                         String dateTemp = CalendarUtility.formattedDate(CalendarUtility.selectedDate);
                         Intent intent3 = new Intent(getApplicationContext(), MultipleDates.class);
